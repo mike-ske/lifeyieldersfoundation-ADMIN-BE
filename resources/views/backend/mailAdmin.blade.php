@@ -52,63 +52,58 @@
                 </div>
 
                 <!-- Mail Table -->
-                <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
-                    <div class="w-full overflow-x-auto grid px-4 py-3 ">
-                        {{-- Read messages --}}
-                        <div class="flex items-center text-sm mb-10">
-                            <a href="#"
-                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                aria-label="Edit">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="flex items-center text-sm mb-10">
-                            <!-- Avatar with inset shadow -->
-                            <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                <img class="object-cover w-full h-full rounded-full"
-                                    src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                    alt="" loading="lazy">
+                @if ($email)
+                    <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
+                        <div class="w-full overflow-x-auto grid px-4 py-3 ">
+                            {{-- Read messages --}}
+                            <div class="flex items-center text-sm mb-10">
+                                <a href="#" @click="openModal"
+                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    aria-label="Edit">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                                    </svg>
+                                </a>
                             </div>
-                            <div>
-                                <p class="font-semibold text-gray-600 dark:text-gray-400">Hans Burger</p>
-                                <p class="text-xs text-gray-600 dark:text-gray-400">
-                                    January 17 2020
+                            <div class="flex items-center text-sm mb-10">
+                                <!-- Avatar with inset shadow -->
+                                <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                    @php
+                                        $user = App\Models\User::find($email->user_id);
+                                    @endphp
+                                    <img class="object-cover w-full h-full rounded-full"
+                                        src="https://ui-avatars.com/api/?name={{  $user->fname }}+{{  $user->lname }}"
+                                        alt="" loading="lazy">
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">
+                                        {{ $email->from }}
+                                    </p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">
+                                        {{ $email->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            {{-- BODY OF MESSAGE --}}
+                            <div class="max-w-full px-4 py-3 mb-8  rounded-lg shadow-md ">
+                                <div class="flex justify-between items-center py-3 text-sm mb-10">
+                                    <h1 class="text-gray-600 font-bold dark:text-gray-400 text-2xl">
+                                        {{ $email->mail_subject }}
+                                    </h1>
+                                    <p class="text-gray-600 dark:text-gray-400">{{ $email->created_at->diffForHumans() }}</p>
+                                </div>
+                                <p class="mb-4 text-gray-600 dark:text-gray-400">
+                                    {{ $email->mail_body }}
                                 </p>
                             </div>
                         </div>
-                        <hr>
-                        {{-- BODY OF MESSAGE --}}
-                        <div class="max-w-full px-4 py-3 mb-8  rounded-lg shadow-md ">
-                            <div class="flex justify-between items-center py-3 text-sm mb-10">
-                                <h1 class="text-gray-600 font-bold dark:text-gray-400 text-2xl">A Continuation Of
-                                    Applications Process</h1>
-                                <p class="text-gray-600 dark:text-gray-400">January 18th 2020 : 12:20</p>
-                            </div>
-                            <p class="mb-4 text-gray-600 dark:text-gray-400">
-                                This is possibly
-                                <strong>the most accessible a modal can get</strong>
-                                , using JavaScript. When opened, it uses
-                                to create a focus trap, which means that if you use your keyboard to navigate around, focus won't leak to the elements behind, staying inside the modal in a loop until you take any action.
-                            </p>
 
-                            <p class="text-gray-600 dark:text-gray-400">
-                                Also, on small screens it is placed at the bottom of the screen,
-                                to account for larger devices and make it easier to click the
-                                larger buttons.
-                            </p>
-                        </div>
                     </div>
-
-                </div>
-
+                @endif
             </div>
-
-
-
         </div>
     </main>
 @endsection

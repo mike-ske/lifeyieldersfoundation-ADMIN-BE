@@ -10,6 +10,14 @@ class Interview extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'interview_link',
+        'lyf_approval_id',
+        'message',
+        'subject',
+        'user_id'
+    ];
+
     public function approve()
     {
         return $this->belongsTo(Approve::class);

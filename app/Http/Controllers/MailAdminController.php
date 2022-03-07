@@ -63,8 +63,10 @@ class MailAdminController extends Controller
      */
     public function show($id)
     {
-        //
-        return view('backend.mailAdmin');
+        // GET each mail ADMIN
+        $email = AdminEmail::where('id', $id)->get();
+        return view('backend.mailAdmin', compact('email'));
+        
     }
 
     /**

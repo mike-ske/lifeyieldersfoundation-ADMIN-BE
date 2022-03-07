@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
+use App\Models\Grant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,13 +30,13 @@ class GrantApplicationController extends Controller
      */
     public function index()
     {
-        $approve = DB::table('lyf_approval')->where('status_id', 1)->get();
+        $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
                 $approveuser = DB::table('lyf_application')->where('id', $approved->id)->paginate(2);
                 return view('pages.grants', compact('approveuser'));
             }
-        } else return "<script>alert('No GRANTS given to Students Application')</script>" . back();
+        } else return "<script>alert('No APPROVAL given to Students Application')</script>" . back();
     }
 
     /**
@@ -69,8 +71,13 @@ class GrantApplicationController extends Controller
      */
     public function show($id)
     {
-        //
-        return view('backend.grantApp');
+        $approve = Bank::where('approve_status', 2)->get();
+        if ($approve->count() > 0) {
+            foreach ($approve as $approved) {
+                $bank = DB::table('lyf_bank')->where('user_id', $approved->user_id)->get();
+                return view('backend.grantApp', compact('bank'));
+           }
+        }
     }
 
     /**
@@ -93,7 +100,36 @@ class GrantApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         // GRANT USER
+           // check for form submit data
+           switch ($request->input('save')) {
+            
+            case 'moneypaid':
+                //  validate award
+                $request->validate([
+                    'amount' => 'required|integer',
+                    'adminname' => 'required|string',
+                    'from' => 'required|string',
+                    'confirm' => 'required',
+                    'aggree' => 'required',
+                ]);
+                
+                $grants = Grant::where('lyf_account_id', $id)->update([
+                    'amount' => $request->amount,
+                    'admin_name' => $request->adminname,
+                    'from' => $request->from,
+                    'grant_status' => 1
+                ]);
+
+               if ($grants > 0) 
+                   return back()->with('status', 'Successfull! Student GRANTED');
+                else
+                    return back()->with('error', 'Failed to grant student');
+
+                break;
+            default:
+                'No GRANTS';
+        }
     }
 
     /**
