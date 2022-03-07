@@ -79,6 +79,10 @@
                                         Examination Score</h6>
                                     <div class="mt-10">
                                         <div class="block mt-4  mb-4">
+                                            @php
+                                                 // get user score
+                                                $score = App\Models\Score::where('user_id', $users->id)->get();
+                                            @endphp         
                                             @if ($score !== '')
                                                 @foreach ($score as $scores)
                                                     <h1
@@ -214,7 +218,7 @@
                                             <div class=" fs6 fc2 sc0 ls0 ws1">
                                                 <input type="text" name="type" id="type" style="font-family: 'Newsreader', serif;
                                                                     margin-top: 202px;
-                                                                    font-size: 17px;
+                                                                    font-size: 24px;
                                                                     text-align: center;
                                                                     color: #cd9340;
                                                                     background-color: transparent;
@@ -224,7 +228,7 @@
 
                                             <div class="t6 x8 ya fs0 fc2 sc0 ls0 ws1">
                                                 <input type="text" name="username" id="username"
-                                                    style="text-align:center;background-color:transparent;margin-top: 109px;font-size:50px!important;font-family:'Sacramento',cursive;padding-bottom:0;line-height:1;"
+                                                    style="text-align:center;background-color:transparent;margin-top: 80px;font-size:70px!important;font-family:'Sacramento',cursive;padding-bottom:0;line-height:1;"
                                                     value="Aileen Nathania"
                                                     class="block mx-auto h-1/2 rounded-md mt-1 text-sm form-input focus:outline-none">
                                             </div>

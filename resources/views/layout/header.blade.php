@@ -765,13 +765,13 @@
         @media screen and (min-width: 768px)
         {
             #cert {
-                width: 776px;
+                width: 1000px;
             }
         }
         @media screen and (min-width: 768px)
         {
             #cert {
-                width: 776px;
+                width: 1000px;
             }
         }
         div::-webkit-scrollbar,

@@ -90,14 +90,12 @@ class AwardApplicationController extends Controller
            
         }
 
-        // get user score
-        $score = Score::where('user_id', $id)->value('score');
         // dd($score);
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
                 $user = DB::table('lyf_account')->where('id', $approved->id)->get();
-                return view('backend.awardApp', compact('score', 'user'));
+                return view('backend.awardApp', compact('user'));
             }
         }
     }
@@ -134,7 +132,7 @@ class AwardApplicationController extends Controller
                     'award_type' => $request->award,
                     'award_status' => 1,
                 ]);
-               if ($award->) 
+               if ($award->count() > 0) 
                    return back()->with('status', 'Successfull! Student AWARDED');
                 else
                     return back()->with('error', 'Failed to award student');
@@ -147,7 +145,7 @@ class AwardApplicationController extends Controller
                     'message' => 'required|max:2000',
                 ]);
 
-                $data = Award::where('user_id', $id)->update([
+                $data = Award::where('lyf_approval_id', 2)->update([
                     'award_file' => $request->file,
                 ]);
 

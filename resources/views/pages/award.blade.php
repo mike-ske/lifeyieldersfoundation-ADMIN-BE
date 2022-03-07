@@ -91,7 +91,7 @@
                                         </td>
                                         <td class="px-4 py-3 text-xs">
                                             @php
-                                                $award = App\Models\Award::where('lyf_approval_id', $approveUser->id)->value('award_status')
+                                                $award = App\Models\Award::where('user_id', $approveUser->id)->value('award_status')
                                             @endphp
                                             @if ($award == 0)
                                                 <span
@@ -102,7 +102,7 @@
                                             @if($award == 1)
                                                 <span
                                                     class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-300 dark:text-green-700">
-                                                    awarded
+                                                    Awarded
                                                 </span>
                                             @endif
                                         </td>

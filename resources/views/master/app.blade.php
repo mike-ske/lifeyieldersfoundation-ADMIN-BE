@@ -12,5 +12,6 @@
 </div>
 
 
+@include('pages.modal')
   
 @include('layout.footer')

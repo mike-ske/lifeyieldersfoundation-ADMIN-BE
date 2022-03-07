@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Award;
+use App\Models\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -124,13 +125,17 @@ class PendingApplicationController extends Controller
                 //     'application_id' => $request->pendinguser,
                 //     'user_id' => $id
                 // ]);
+                Interview::insert([
+                    'lyf_approval_id' => 2,
+                    'user_id' => $id
+                ]);
                 DB::table('banks')->insert([
                     'application_id' => $request->pendinguser,
                     'user_id' => $id
                 ]);
                 // APPROVE THE AWARD TABLE
                 Award::insert([
-                    'lyf_approval_id' => 1,
+                    'lyf_approval_id' => 2,
                     'user_id' => $id,
                 ]);
                 
@@ -142,7 +147,9 @@ class PendingApplicationController extends Controller
                 // DECLINE THE AWARD TABLE
                 Award::where('lyf_approval_id', 1)->update([
                     'lyf_approval_id' => 0,
+                    'award_file' => ''
                 ]);
+                
 
                 if($data !== '')
                     return back()->with('status', 'Application decline');
