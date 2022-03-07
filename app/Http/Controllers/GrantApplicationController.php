@@ -71,7 +71,7 @@ class GrantApplicationController extends Controller
      */
     public function show($id)
     {
-        $approve = Bank::where('approve_status', 2)->where('approve_status', 2)->get();
+        $approve = Bank::where('approve_status', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
                 $bank = DB::table('lyf_bank')->where('user_id', $approved->user_id)->get();
