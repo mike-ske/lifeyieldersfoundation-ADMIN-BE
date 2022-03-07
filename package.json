@@ -1,0 +1,38 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress  --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.2",
+        "axios": "^0.26.0",
+        "cross-env": "^7.0",
+        "jquery": "^3.6.0",
+        "laravel-mix": "^6.0.43",
+        "lodash": "^4.17.19",
+        "postcss": "^8.4.6",
+        "postcss-import": "^12.0",
+        "postcss-nested": "^4.2",
+        "resolve-url-loader": "^5.0.0",
+        "tailwindcss": "^3.0.23",
+        "vue-template-compiler": "^2.6.11"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.0.0",
+        "@release-it/conventional-changelog": "^4.1.0",
+        "@tailwindcss/custom-forms": "^0.2.1",
+        "color": "^4.2.1",
+        "commitizen": "^4.2.4",
+        "cssnano": "^5.0.17",
+        "cz-conventional-changelog": "^3.0.1",
+        "postcss-cli": "^9.1.0",
+        "release-it": "^14.12.4",
+        "tailwindcss-multi-theme": "^1.0.4"
+    }
+}
