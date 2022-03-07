@@ -30,10 +30,10 @@ class InterviewApplicationController extends Controller
     public function index()
     {
         //
-        $approve = DB::table('lyf_approval')->where('status_id', 1)->get();
+        $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $approveuser = DB::table('lyf_application')->where('id', $approved->id)->paginate(2);
+                $approveuser = DB::table('lyf_application')->paginate(2);
                 return view('pages.interview', compact('approveuser'));
             } 
         }else return "<script>alert('No APPROVED Students Application')</script>" . back();

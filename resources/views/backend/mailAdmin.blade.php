@@ -102,6 +102,11 @@
                         </div>
 
                     </div>
+                @else
+                        <h1
+                            class="text-xl p-2 mt-10 font-semibold text-center text-gray-500 uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+                            There are no mail found
+                        </h1>
                 @endif
             </div>
         </div>

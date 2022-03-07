@@ -30,8 +30,12 @@ class MailAdminController extends Controller
     {
         $auth_id = Auth::user()->role_id;
         $mail = AdminEmail::where('role_id', $auth_id)->paginate(2);
-        
         return view('pages.mails', compact('mail'));
+        
+        // if ($mail->count() > 0 ) 
+        // else if ($mail->count() == 0 ) 
+        //     return view('pages.mails', ['mail' => 'No mail found']);
+        
     }
 
     /**

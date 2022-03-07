@@ -29,41 +29,59 @@
                 @isset($student)
                     @foreach ($student as $students)
                         <div class="sm:w-2/6 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
-                            <div class="relative w-full mr-3 rounded-full md:block">
-                                <img class="object-cover rounded-full mx-auto mb-8" style="height: 100px;width:100px"
-                                    src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                    alt="" loading="lazy">
-                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
-                                </div>
-                            </div>
                             @php
                                 $status_id = DB::table('lyf_approval')
                                     ->where('application_id', $students->id)
                                     ->value('status_id');
+                                $image = DB::table('lyf_account')->where('id', $students->user_id)->value('image');
                             @endphp
+                            @if ($image === '')
+                                <div class="relative w-full mr-3 rounded-full md:block">
+                                    <img class="object-cover rounded-full mx-auto mb-8" style="height: 100px;width:100px"
+                                        src="https://ui-avatars.com/api/?name={{ $students->fname }}+{{ $students->lname }}"
+                                        alt="" loading="lazy">
+                                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                    </div>
+                                </div>
+                            @else
+                                <div class="relative w-full mr-3 rounded-full md:block">
+                                    <img class="object-cover rounded-full mx-auto mb-8" style="height: 100px;width:100px"
+                                        src="data:image/jpeg;base64,{{ $image }}"
+                                        alt="" loading="lazy">
+                                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                    </div>
+                                </div>
+                            @endif
+
                             @if ($status_id == 0)
-                                <span style="font-size:10px"
-                                    class="px-2 py-1 font-xs text-center  rounded-full leading-tight text-red-700 bg-red-100 dark:bg-red-700 dark:text-red-100">
-                                    Awating
-                                </span>
+                                <div class="mx-auto w-full flex justify-center items-center">
+                                    <span style="font-size:10px"
+                                        class="px-2 py-1 font-xs text-center  rounded-full leading-tight text-red-700 bg-red-100 dark:bg-red-700 dark:text-red-100">
+                                        Awating
+                                    </span>
+                                </div>
                             @endif
                             @if ($status_id == 1)
-                                <span style="font-size:10px"
-                                    class="px-2 py-1 font-xs font-semibold leading-tight text-red-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
-                                    Pending
-                                </span>
+                                <div class="mx-auto w-full flex justify-center items-center">
+                                    <span style="font-size:10px"
+                                        class="px-2 py-1 font-xs font-semibold leading-tight text-red-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
+                                        Pending
+                                    </span>
+                                </div>
                             @endif
                             @if ($status_id == 2)
-                                <span style="font-size:10px"
-                                    class="px-2 py-1 font-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                    Approved
-                                </span>
+                                <div class="mx-auto w-full flex justify-center items-center">
+                                    <span style="font-size:10px"
+                                        class="px-2 py-1 font-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        Approved
+                                    </span>
+                                </div>
                             @endif
                             <p class="font-semibold text-center text-gray-600 dark:text-gray-400">
-                                 {{ $students->fname }} {{ $students->lname }}
+                                {{ $students->fname }} {{ $students->lname }}
                             </p>
                             <p class="text-xs text-gray-600 dark:text-gray-400 text-center">
-                                 {{ $students->email }}
+                                {{ $students->email }}
                             </p>
 
                         </div>
@@ -86,7 +104,7 @@
 
                         <label class="block text-sm mb-4">
                             <span class="text-gray-700 dark:text-gray-400">Subject</span>
-                            <input type="text"  name="subject" id="subject"
+                            <input type="text" name="subject" id="subject"
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 placeholder="Enter subject">
                             @error('subject')
@@ -97,7 +115,7 @@
                         </label>
                         <label class="block text-sm mb-4">
                             <span class="text-gray-700 dark:text-gray-400">Meeting Link</span>
-                            <input type="url"  name="url" id="url"
+                            <input type="url" name="url" id="url"
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 placeholder="http://www.googlemeet.com/interview">
                             @error('url')
