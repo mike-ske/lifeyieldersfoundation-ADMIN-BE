@@ -12,17 +12,17 @@
                 <span
                     class="flex items-center justify-between w-full px-4 py-2 mb-8 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none ">
                     <div class="flex items-left justify-left w-full">
-                        <svg class="w-6 h-6 mr-2" fill="none" 
-                            stroke="currentColor" viewBox="0 0 24 24" 
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" 
-                            stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                        </svg> 
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+                            </path>
+                        </svg>
                         {{ session('status') }}
                     </div>
                     <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
-                                aria-hidden="true">X</span>
-            </span>
+                        aria-hidden="true">X</span>
+                </span>
             @endif
             @if ($user)
                 @foreach ($user as $users)
@@ -32,7 +32,8 @@
                                 <div class="relative w-full mr-3 rounded-full md:block">
                                     @if ($users->image === null)
                                         <div class="relative  w-full mr-3 rounded-full md:block">
-                                            <img class="object-cover rounded-full mx-auto mb-8" style="height: 100px;width:100px"
+                                            <img class="object-cover rounded-full mx-auto mb-8"
+                                                style="height: 100px;width:100px"
                                                 src="https://ui-avatars.com/api/?name={{ $users->fname }}+{{ $users->lname }}"
                                                 alt="" loading="lazy">
                                             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
@@ -48,8 +49,7 @@
                                     @endif
                                     <div class="flex items-center justify-center mt-2 text-center w-full">
                                         @php
-                                            $status_id = App\Models\Award::where('user_id', $users->id)
-                                                                    ->value('lyf_approval_id');
+                                            $status_id = App\Models\Award::where('user_id', $users->id)->value('lyf_approval_id');
                                         @endphp
                                         @if ($status_id == 0)
                                             <span style="font-size:10px"
@@ -80,26 +80,27 @@
                                     <div class="mt-10">
                                         <div class="block mt-4  mb-4">
                                             @if ($score !== '')
-
-                                                {{-- @foreach ($score as $scores) --}}
-                                                    <h1 class="my-6 text-4xl font-bold text-gray-700 dark:text-gray-200 text-center">
-                                                        {{ $score }}%
+                                                @foreach ($score as $scores)
+                                                    <h1
+                                                        class="my-6 text-4xl font-bold text-gray-700 dark:text-gray-200 text-center">
+                                                        {{ $scores }}%
                                                     </h1>
-                                                {{-- @endforeach --}}
+                                                @endforeach
                                             @else
-                                                <h1 class="my-6 text-4xl font-bold text-gray-700 dark:text-gray-200 text-center">
+                                                <h1
+                                                    class="my-6 text-4xl font-bold text-gray-700 dark:text-gray-200 text-center">
                                                     {{ 0 }} %
-                                                </h1> 
+                                                </h1>
                                             @endif
                                         </div>
-        
+
                                         <h6 class="my-4 text-l font-semibold text-gray-700 dark:text-gray-200">
                                             Select Award
                                         </h6>
                                         <form action="/award/{{ $users->id }}" method="post">
                                             @csrf
                                             @method('PATCH')
-        
+
                                             <label class="block text-sm mb-8">
                                                 <span class="text-gray-700 dark:text-gray-400">Award</span>
                                                 <select name="awardtype"
@@ -122,18 +123,20 @@
                                                 <span class="ml-2" aria-hidden="true">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
                                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
                                                             d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
                                                         </path>
                                                     </svg>
                                                 </span>
                                             </button>
                                         </form>
-        
+
                                     </div>
                                 </div>
                                 {{-- Leave a message to this user application --}}
-                                <form action="/award/{{ $users->id }}" method="post"class="mt-10" enctype="multipart/form-data">
+                                <form action="/award/{{ $users->id }}" method="post" class="mt-10"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PATCH')
 
@@ -141,7 +144,7 @@
                                         <span class="text-gray-700 dark:text-gray-400">Upload award</span>
                                         <input
                                             class="resize-none block w-full h-1/2 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray""
-                                                type="file" name="file" id="file">
+                                                    type=" file" name="file" id="file">
                                         @error('file')
                                             <span class="text-red-500 text-xs mt-4">
                                                 {{ $message }}
@@ -163,8 +166,9 @@
                                         class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                         Send
                                         <span class="ml-2" aria-hidden="true">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
                                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                                                 </path>
@@ -174,8 +178,8 @@
                                 </form>
                             </div>
                         </div>
-        
-        
+
+
                         {{-- MAIN APPLICATION INFO --}}
                         <div id="cert" class="px-4 py-3 hidden sm:block mb-8 sm:w-full  rounded-lg shadow-md">
                             <div class="w-full flex justify-between items-center">
@@ -183,8 +187,7 @@
                                     Award Scholarship Certificate
                                 </h2>
                                 @php
-                                    $status_id = App\Models\Award::where('user_id', $users->id)
-                                                        ->value('award_status');
+                                    $status_id = App\Models\Award::where('user_id', $users->id)->value('award_status');
                                 @endphp
                                 @if ($status_id == 0)
                                     <span style="font-size:10px"
@@ -198,62 +201,104 @@
                                         Awarded
                                     </span>
                                 @endif
-                             
+
                             </div>
-                            <form action="#" method="post">
+                            <form action="/award/{{ $users->id }}" method="post" class="mt-10"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('PATCH')
                                 {{-- CONTENTS FOR THE CERTIFICATE OF AWARD --}}
                                 <div class="w-full h-auto p-4 bg-white" contenteditable="true">
                                     <div class="pc pc2 opened relative overflow-hidden">
                                         <div class="c absolute w-full h-full z-50 overflow-hidden">
-        
-                                        <div style="font-family: 'Newsreader', serif;
-                                                    margin-top: 147px;
-                                                    font-size: 17px;
-                                                    text-align: center;
-                                                    color: #cd9340;
-                                                    font-weight: 600;
-                                                    " class=" fs6 fc2 sc0 ls0 ws1">
-                                            PLATINUM AWARD</div>
-        
-                                            <div style="margin-top: 82px;font-size:50px!important;font-family:'Sacramento',cursive;padding-bottom:0;line-height:1;" class="t6 x8 ya fs0 fc2 sc0 ls0 ws1">Aileen Nathania
+                                            <div class=" fs6 fc2 sc0 ls0 ws1">
+                                                <input type="text" name="type" id="type" style="font-family: 'Newsreader', serif;
+                                                                    margin-top: 202px;
+                                                                    font-size: 17px;
+                                                                    text-align: center;
+                                                                    color: #cd9340;
+                                                                    background-color: transparent;
+                                                                    font-weight: 600;" value="PLATINUM AWARD"
+                                                    class="block mx-auto h-1/2 rounded-md mt-1 text-sm dark:bg-transparent form-input focus:outline-none">
                                             </div>
-                                            <div class=" flex justify-between items-center";
-                                            
-                                                style="width: 190px;margin:auto;text-align:center;left:34px;position:relative;margin-top: 31px;font-size:10px;">
+
+                                            <div class="t6 x8 ya fs0 fc2 sc0 ls0 ws1">
+                                                <input type="text" name="username" id="username"
+                                                    style="text-align:center;background-color:transparent;margin-top: 109px;font-size:50px!important;font-family:'Sacramento',cursive;padding-bottom:0;line-height:1;"
+                                                    value="Aileen Nathania"
+                                                    class="block mx-auto h-1/2 rounded-md mt-1 text-sm form-input focus:outline-none">
+                                            </div>
+                                            <div class=" flex justify-between items-center" ;
+                                                style="width:325px;margin:auto;text-align:center;left:34px;position:relative;margin-top: 11px;">
                                                 <div>
-                                                    <div style="font-family:'Poppins', sans-serif;" class="font-bold x9 yb fc2 sc0 ls0 ws1 text-tiny text-right">7th January</div>
+                                                    <div class="font-bold x9 yb fc2 sc0 ls0 ws1 text-tiny text-right">
+                                                        <input type="text" name="date" id="date"
+                                                            style="font-weight:700;background-color:transparent;font-family:'Poppins', sans-serif;font-size:10px;width:100%"
+                                                            value="7th January"
+                                                            class="block mx-auto h-1/2 rounded-md mt-1 text-sm form-input focus:outline-none">
+
+                                                    </div>
                                                 </div>
                                                 <div>
-                                                    <div style="font-family:'Poppins', sans-serif;" class="font-bold xf y12 fc2 sc0 ls0 ws1 text-tiny">2023</div>
+                                                    <div class="font-bold xf y12 fc2 sc0 ls0 ws1 text-tiny">
+                                                        <input type="text" name="year" id="year"
+                                                            style="font-weight:700;background-color: transparent;font-family:'Poppins', sans-serif;font-size:10px;width:100%;text-align:center"
+                                                            class="block mx-auto h-1/2 rounded-md mt-1 text-sm form-input focus:outline-none"
+                                                            value="2023">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class=" flex justify-between items-center"
-                                                style="width: 120px;margin: 65px auto 0;font-size:7px;">
+                                                style="width:155px;margin: 100px auto 0;font-size:7px;">
                                                 <div>
-                                                    <div style="font-family:'Poppins', sans-serif;" class="font-bold x9 yb ff7 fc2 sc0 ls0 ws1 text-tiny text-right">CEO</div>
+                                                    <div class="font-bold x9 yb ff7 fc2 sc0 ls0 ws1 text-tiny text-right">
+                                                        <input type="text" name="ceo" id="ceo"
+                                                            style="font-weight:700;background-color:transparent;font-family:'Poppins', sans-serif;"
+                                                            class="block mx-auto h-1/2 rounded-md focus:outline-none"
+                                                            value="CEO">
+
+                                                    </div>
                                                 </div>
                                                 <div>
-                                                    <div style="font-family:'Poppins', sans-serif;" class="font-bold xf y12 ff7 fc2 sc0 ls0 ws1 text-tiny">MANAGER</div>
+                                                    <div class="font-bold xf y12 ff7 fc2 sc0 ls0 ws1 text-tiny">
+                                                        <input type="text" name="manager" id="manager"
+                                                            style="font-weight:700;background-color:transparent;font-family:'Poppins', sans-serif;"
+                                                            class="block mx-auto h-1/2 rounded-md  focus:outline-none"
+                                                            value="MANAGER">
+
+                                                    </div>
                                                 </div>
                                             </div>
-        
+
                                         </div>
                                         <div class="bi x0 y0 relative t-0">
-                                            <img class="relative w-full h-auto" src="{{ asset('image/certAward.png') }}" alt="">
+                                            @php
+                                                $image = DB::table('image')
+                                                    ->where('id', 1)
+                                                    ->value('certificate');
+                                            @endphp
+                                            {{-- <img class="relative w-full h-auto" src="{{ asset('image/certAward.png') }}" alt=""> --}}
+                                            <img class="relative w-full h-auto"
+                                                src="data:image/jpeg;base64,{{ $image }}" alt="">
                                         </div>
                                     </div>
                                 </div>
+                                @error('htmlcertificate')
+                                    <span class="text-red-500 text-xs mt-4">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
                                 {{-- End of AWARD --}}
                                 <div class="flex mt-10 text-sm items-right justify-end">
                                     <label class="flex dark:text-gray-400 mb-8">
-                                        <button
+                                        <button type="submit" name="save" value="certificate"
                                             class="px-3 mr-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                             Generate Award
                                         </button>
                                     </label>
                                 </div>
                             </form>
-        
+
                         </div>
                     </div>
                 @endforeach
