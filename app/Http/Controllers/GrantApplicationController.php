@@ -25,7 +25,7 @@ class GrantApplicationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * ->where('id', $approved->id)
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -33,7 +33,7 @@ class GrantApplicationController extends Controller
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $approveuser = DB::table('lyf_application')->where('id', $approved->id)->paginate(2);
+                $approveuser = DB::table('lyf_application')->paginate(2);
                 return view('pages.grants', compact('approveuser'));
             }
         } else return "<script>alert('No APPROVAL given to Students Application')</script>" . back();
@@ -71,11 +71,15 @@ class GrantApplicationController extends Controller
      */
     public function show($id)
     {
-        $approve = Bank::where('approve_status', 2)->get();
+        $approve = Bank::where('approve_status', 2)->where('approve_status', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
                 $bank = DB::table('lyf_bank')->where('user_id', $approved->user_id)->get();
-                return view('backend.grantApp', compact('bank'));
+
+                if ($bank->count() > 0 ) 
+                    return view('backend.grantApp', compact('bank'));
+                else if ($bank->count() == 0 ) 
+                    return back()->with('error', 'Failed! No Bank Details for this student');
            }
         }
     }

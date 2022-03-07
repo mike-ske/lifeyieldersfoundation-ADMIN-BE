@@ -98,14 +98,14 @@
                                 <span class="text-gray-700 dark:text-gray-400">City</span>
                                 <p
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-                                     {{ $bankdetails->city }}
+                                    {{ $bankdetails->city }}
                                 </p>
                             </label>
                             <label class="block text-sm mb-4">
                                 <span class="text-gray-700 dark:text-gray-400">Country</span>
                                 <p
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-                                   {{ $bankdetails->country }}
+                                    {{ $bankdetails->country }}
                                 </p>
                             </label>
                             <label class="block text-sm mb-4">
@@ -126,7 +126,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">Account number</span>
                                 <p
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-                                     {{ $bankdetails->acctnumber }}
+                                    {{ $bankdetails->acctnumber }}
                                 </p>
                             </label>
                             <label class="block text-sm mb-4">
@@ -152,6 +152,102 @@
                             </label>
 
                         </div>
+
+                        {{-- CONFIRM ORDER TRANSACTIONS --}}
+                        <div class="w-full sm:w-2/5 ">
+                            <div class="w-full sm:flex bg-white dark:bg-gray-800 mt-10">
+                                {{-- MAIN APPLICATION INFO --}}
+                                <form action="/grants/{{ $bankdetails->id }}" method="post"
+                                    class="px-4 py-3 sm:w-full  rounded-lg shadow-md">
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <div class="w-full flex justify-between items-center">
+                                        <h2 class="my-6 text-l font-semibold text-gray-700 dark:text-gray-200">
+                                            Confirm Transfer
+                                        </h2>
+                                    </div>
+                                    <label class="block text-sm mb-4">
+                                        <span class="text-gray-700 dark:text-gray-400">Amount - ($)</span>
+                                        <input type="number" name="amount" id="amount"
+                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                            placeholder="78000">
+                                        @error('amount')
+                                            <span class="text-red-500 text-xs mt-4">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </label>
+                                    <label class="block text-sm mb-4">
+                                        <span class="text-gray-700 dark:text-gray-400">By Admin</span>
+                                        <input type="text" name="adminname" id="adminname"
+                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                            placeholder="Paul">
+                                        @error('adminname')
+                                            <span class="text-red-500 text-xs mt-4">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </label>
+                                    <label class="block text-sm mb-4">
+                                        <span class="text-gray-700 dark:text-gray-400">From</span>
+                                        <input type="text" name="from" id="from" value="Lifeyieldersfoundation" disabled
+                                            class="block w-full mt-1 text-sm disabled dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+                                        @error('from')
+                                            <span class="text-red-500 text-xs mt-4">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </label>
+                                    <div class="flex mt-6 text-sm">
+                                        <label class="flex items-center dark:text-gray-400">
+                                            <input type="checkbox" name="confirm" id="confirm"
+                                                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                            <span class="ml-2">
+                                                I confirm that the details here are true and accurate
+                                            </span>
+                                        </label>
+                                        @error('confirm')
+                                            <span class="text-red-500 text-xs mt-4">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="flex mt-6 text-sm">
+                                        <label class="flex items-center dark:text-gray-400">
+                                            <input type="checkbox" name="aggree" id="aggree"
+                                                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                            <span class="ml-2">
+                                                I agree to the
+                                                <a target="_blank" href="http://www.lifeyieldersfoundation.org/privacy"
+                                                    class="underline">privacy policy</a>
+                                            </span>
+                                        </label>
+                                        @error('aggree')
+                                            <span class="text-red-500 text-xs mt-4">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="flex mt-10 text-sm items-right justify-end">
+                                        <label class="flex dark:text-gray-400 mb-8">
+                                            <div>
+                                                <button name="save" value="moneypaid"
+                                                    class="px-3 mr-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                    Confirm
+                                                </button>
+                                                <button type="reset" name="save" value="bankdecline"
+                                                    class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-600 border border-transparent rounded-md active:bg-yellow-600 hover:bg-orange-700 focus:outline-none focus:shadow-outline-purple">
+                                                    Clear
+                                                </button>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
                     @endforeach
                 @else
                     <h1
@@ -160,100 +256,6 @@
                         {{ $bankdetails->lname }}
                     </h1>
                 @endif
-                {{-- CONFIRM ORDER TRANSACTIONS --}}
-                <div class="w-full sm:w-2/5 ">
-                    <div class="w-full sm:flex bg-white dark:bg-gray-800 mt-10">
-                        {{-- MAIN APPLICATION INFO --}}
-                        <form action="/grants/{{ $bankdetails->id }}" method="post" class="px-4 py-3 sm:w-full  rounded-lg shadow-md">
-                            @csrf
-                            @method('PATCH')
-
-                            <div class="w-full flex justify-between items-center">
-                                <h2 class="my-6 text-l font-semibold text-gray-700 dark:text-gray-200">
-                                    Confirm Transfer
-                                </h2>
-                            </div>
-                            <label class="block text-sm mb-4">
-                                <span class="text-gray-700 dark:text-gray-400">Amount - ($)</span>
-                                <input type="number" name="amount" id="amount"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="78000">
-                                @error('amount')
-                                    <span class="text-red-500 text-xs mt-4">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                            </label>
-                            <label class="block text-sm mb-4">
-                                <span class="text-gray-700 dark:text-gray-400">By Admin</span>
-                                <input type="text" name="adminname" id="adminname"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="Paul">
-                                @error('adminname')
-                                    <span class="text-red-500 text-xs mt-4">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                            </label>
-                            <label class="block text-sm mb-4">
-                                <span class="text-gray-700 dark:text-gray-400">From</span>
-                                <input type="text" name="from" id="from" value="Lifeyieldersfoundation" disabled
-                                    class="block w-full mt-1 text-sm disabled dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-                                @error('from')
-                                    <span class="text-red-500 text-xs mt-4">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                            </label>
-                            <div class="flex mt-6 text-sm">
-                                <label class="flex items-center dark:text-gray-400">
-                                    <input type="checkbox" name="confirm" id="confirm" 
-                                        class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <span class="ml-2">
-                                        I confirm that the details here are true and accurate
-                                    </span>
-                                </label>
-                                 @error('confirm')
-                                    <span class="text-red-500 text-xs mt-4">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="flex mt-6 text-sm">
-                                <label class="flex items-center dark:text-gray-400">
-                                    <input type="checkbox" name="aggree" id="aggree" 
-                                        class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <span class="ml-2">
-                                        I agree to the
-                                        <a target="_blank" href="http://www.lifeyieldersfoundation.org/privacy"
-                                            class="underline">privacy policy</a>
-                                    </span>
-                                </label>
-                                 @error('aggree')
-                                    <span class="text-red-500 text-xs mt-4">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="flex mt-10 text-sm items-right justify-end">
-                                <label class="flex dark:text-gray-400 mb-8">
-                                    <div>
-                                        <button  name="save" value="moneypaid"
-                                            class="px-3 mr-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                            Confirm
-                                        </button>
-                                        <button type="reset" name="save" value="bankdecline"
-                                            class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-600 border border-transparent rounded-md active:bg-yellow-600 hover:bg-orange-700 focus:outline-none focus:shadow-outline-purple">
-                                            Clear
-                                        </button>
-                                    </div>
-                                </label>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
 

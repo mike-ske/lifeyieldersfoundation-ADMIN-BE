@@ -8,6 +8,14 @@
                 Grants
             </h2>
             <!-- CTA -->
+            @if (session()->has('error'))
+                <span id="closeit" style="background:rgb(142 16 16)"
+                    class="flex items-center mb-10 justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-700 border border-transparent rounded-lg ">
+                    {{ session('error') }}
+                    <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
+                        aria-hidden="true">X</span>
+                </span>
+            @endif
             <a
                 class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple">
                 <div class="flex items-center">
@@ -139,7 +147,7 @@
                     </table>
                 </div>
                 <div
-                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                    class=" px-4 py-3 text-xs font-semibold  text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                     {{ $approveuser->links() }}
                 </div>
             </div>
