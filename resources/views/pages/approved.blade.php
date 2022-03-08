@@ -40,10 +40,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                @if ($approved)
-                                    <h1 class="text-xl p-2 mt-10 font-semibold text-center text-gray-500 uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">{{ $approved }}</h1>
-                                @endif
-
+                      
                                 @if ($approved)
                                     @foreach ($approved as $appValue)
                                     
@@ -51,13 +48,13 @@
                                             <td class="px-4 py-3">
                                                 <div class="flex items-center text-sm">
                                                     <!-- Avatar with inset shadow -->
-                                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                                        <img class="object-cover w-full h-full rounded-full"
-                                                            src="https://ui-avatars.com/api/?name={{ $appValue->fname }}+{{ $appValue->lname }}"
-                                                            alt="" loading="lazy">
-                                                        <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                                            <img class="object-cover w-full h-full rounded-full"
+                                                                src="https://ui-avatars.com/api/?name={{ $appValue->fname }}+{{ $appValue->lname }}"
+                                                                alt="" loading="lazy">
+                                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     <div>
                                                         <p class="font-semibold">{{ $appValue->fname }} {{ $appValue->lname }}</p>
                                                         <p class="text-xs text-gray-600 dark:text-gray-400">
@@ -80,6 +77,11 @@
                                                     <span
                                                         class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                                         Approved
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-green-100 rounded-full dark:bg-gray-700 dark:text-green-100">
+                                                        Awaiting
                                                     </span>
                                                 @endif
                                             </td>
@@ -109,10 +111,10 @@
                     </table>
                     
                 </div>
-                <div
-                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                    {{ $approved->links() }}
-                </div>
+            </div>
+            <div
+                class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                {{ $approved->links() }}
             </div>
 
         </div>

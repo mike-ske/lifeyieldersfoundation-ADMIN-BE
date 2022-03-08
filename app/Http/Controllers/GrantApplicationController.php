@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Grant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GrantApplicationController extends Controller
@@ -75,7 +76,7 @@ class GrantApplicationController extends Controller
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
                 $bank = DB::table('lyf_bank')->where('user_id', $approved->user_id)->get();
-
+               
                 if ($bank->count() > 0 ) 
                     return view('backend.grantApp', compact('bank'));
                 else if ($bank->count() == 0 ) 
@@ -109,23 +110,24 @@ class GrantApplicationController extends Controller
            switch ($request->input('save')) {
             
             case 'moneypaid':
+
                 //  validate award
                 $request->validate([
                     'amount' => 'required|integer',
                     'adminname' => 'required|string',
-                    'from' => 'required|string',
                     'confirm' => 'required',
                     'aggree' => 'required',
                 ]);
-                
+              dd($request->id);
                 $grants = Grant::where('lyf_account_id', $id)->update([
                     'amount' => $request->amount,
                     'admin_name' => $request->adminname,
-                    'from' => $request->from,
-                    'grant_status' => 1
+                    'from' => 'Lifeyieldersfoundation',
+                    'grant_status' => 1,
+                    'role_id' => Auth::user()->role_id
                 ]);
-
-               if ($grants > 0) 
+                
+                if ($grants == 1) 
                    return back()->with('status', 'Successfull! Student GRANTED');
                 else
                     return back()->with('error', 'Failed to grant student');

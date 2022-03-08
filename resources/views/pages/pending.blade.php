@@ -70,10 +70,23 @@
                                                 @php
                                                     $aprove_id  = DB::table('lyf_approval')->select('status_id')->where('application_id', $appValue->id)->value('status_id')
                                                 @endphp
+                                               
                                                 @if ($aprove_id == 1)
                                                     <span 
                                                         class="px-2 py-1 font-semibold leading-tight text-red-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
                                                         Pending
+                                                    </span>
+                                                @endif
+                                                @if ($aprove_id == 2)
+                                                    <span 
+                                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                        Approved
+                                                    </span>
+                                                @endif
+                                                @if ($aprove_id == 0)
+                                                    <span 
+                                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                        Approved
                                                     </span>
                                                 @endif
                                             </td>
@@ -115,14 +128,8 @@
                     </table>
                 </div>
                 <div
-                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                
-                    <!-- Pagination -->
-                    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                        <nav aria-label="Table navigation">
-                            {{ $pending->links() }}
-                        </nav>
-                    </span>
+                    class="px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                        {{ $pending->links() }}
                 </div>
             </div>
 

@@ -14,6 +14,7 @@ class ApplicationController extends Controller
      * SET MIDDLEWARE FOR THIS ADMIN MAKE SURE THE USER 
      * IS AUTHENTICATED BEFORE HE ACCESS THIS ROUTE
      *
+     * where('id', $app->application_id)
      * @return void
      */
     public function __construct()
@@ -32,7 +33,6 @@ class ApplicationController extends Controller
         foreach ($approve as $app) {
             // dd($app);
             $application = DB::table('lyf_application')->where('id', $app->application_id)->paginate();
-           
         }
         if (!isset($application))
             return "<script>alert('No new student application')</script>" . back();
@@ -140,7 +140,7 @@ class ApplicationController extends Controller
             case 'decline':
                 $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 0]);
                 if($data !== '')
-                    return back()->with('status', 'Application decline');
+                    return back()->with('error', 'Application decline');
 
                 break;
             case 'score':
@@ -163,7 +163,7 @@ class ApplicationController extends Controller
             case 'bankdecline':
                 $data = DB::table('banks')->where('application_id', $id)->update(['approve_status' => 0]);
                 if($data !== '')
-                    return back()->with('status', 'Bank information declined');
+                    return back()->with('error', 'Bank information declined');
 
                 break;
             default:

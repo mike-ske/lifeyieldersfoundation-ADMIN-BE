@@ -18,6 +18,8 @@ class CreateInterviewsTable extends Migration
             $table->string('interview_link')->nullable();
             $table->unsignedBigInteger('lyf_approval_id')->constrained()->onDelete('cascade');
             $table->text('message')->nullable();
+            $table->string('subject')->nullable();
+            $table->integer('user_id')->default(0);
             $table->timestamps();
         });
     }
@@ -32,3 +34,5 @@ class CreateInterviewsTable extends Migration
         Schema::dropIfExists('interviews');
     }
 }
+
+

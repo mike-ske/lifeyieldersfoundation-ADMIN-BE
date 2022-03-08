@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Award;
+use App\Models\Grant;
 use App\Models\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +32,11 @@ class PendingApplicationController extends Controller
     public function index()
     {
         $pending_id = DB::table('lyf_approval')->where('status_id', 1)->get();
-    
-        foreach ($pending_id as $value) {
-           $pending =  DB::table('lyf_application')->where('id', $value->application_id)->paginate(2);
+        if($pending_id->count() > 0){
+            foreach ($pending_id as $value) {
+               $pending =  DB::table('lyf_application')->paginate(2);
+            }
         }
-
         // dd( $pending_id);
          if (!isset($pending))
              return "<script>alert('No pending application')</script>" . back();
@@ -75,7 +76,7 @@ class PendingApplicationController extends Controller
     {
         $student = DB::table('lyf_application')->where('user_id', $id)->get();
         $bank = DB::table('lyf_bank')->where('user_id', $id)->get();
-       
+        
         return view('backend.pendingApp', compact('student', 'bank'));
     }
 
@@ -121,10 +122,7 @@ class PendingApplicationController extends Controller
             case 'pend':
 
                 $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 2]);
-                // DB::table('scores')->update([
-                //     'application_id' => $request->pendinguser,
-                //     'user_id' => $id
-                // ]);
+                
                 Interview::insert([
                     'lyf_approval_id' => 2,
                     'user_id' => $id
@@ -138,6 +136,10 @@ class PendingApplicationController extends Controller
                     'lyf_approval_id' => 2,
                     'user_id' => $id,
                 ]);
+                Grant::insert([
+                    'lyf_account_id' => $id,
+                    'award_id' => 0,
+                ]);
                 
                 if($data !== '')
                     return back()->with('status', 'Application APPROVED');
@@ -147,12 +149,15 @@ class PendingApplicationController extends Controller
                 // DECLINE THE AWARD TABLE
                 Award::where('lyf_approval_id', 1)->update([
                     'lyf_approval_id' => 0,
-                    'award_file' => ''
+                    'award_file' => 0
                 ]);
-                
+                Interview::where('lyf_approval_id', 2)->update([
+                    'lyf_approval_id' => 0,
+                    'user_id' => 0
+                ]);
 
                 if($data !== '')
-                    return back()->with('status', 'Application decline');
+                    return back()->with('error', 'Application decline');
                 break;
             case 'score':
                 // validate score
@@ -174,7 +179,7 @@ class PendingApplicationController extends Controller
             case 'bankdecline':
                 $data = DB::table('banks')->where('application_id', $id)->update(['approve_status' => 0]);
                 if($data !== '')
-                    return back()->with('status', 'Bank information declined');
+                    return back()->with('error', 'Bank information declined');
 
                 break;
             default:
