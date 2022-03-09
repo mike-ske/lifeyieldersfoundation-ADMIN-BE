@@ -59,7 +59,7 @@
                                                 Awaiting
                                             </span>
                                         @endif
-                                        @if ($status_id == 1)
+                                        @if ($status_id == 2)
                                             <span style="font-size:10px"
                                                 class="px-2 py-1 font-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                                 Approved
@@ -83,15 +83,15 @@
                                         <div class="block mt-4  mb-4">
                                             @php
                                                  // get user score
-                                                $score = App\Models\Score::where('user_id', $users->id)->get();
+                                                $score = App\Models\Score::findOrfail($users->id)->value('score');
                                             @endphp         
                                             @if ($score !== '')
-                                                @foreach ($score as $scores)
+                                                {{-- @foreach ($score as $scores) --}}
                                                     <h1
                                                         class="my-6 text-4xl font-bold text-gray-700 dark:text-gray-200 text-center">
-                                                        {{ $scores }}%
+                                                        {{ $score }}%
                                                     </h1>
-                                                @endforeach
+                                                {{-- @endforeach --}}
                                             @else
                                                 <h1
                                                     class="my-6 text-4xl font-bold text-gray-700 dark:text-gray-200 text-center">

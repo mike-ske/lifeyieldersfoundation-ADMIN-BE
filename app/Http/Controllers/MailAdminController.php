@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\AdminEmail;
 use App\Models\SendMail;
 use Illuminate\Http\Request;
