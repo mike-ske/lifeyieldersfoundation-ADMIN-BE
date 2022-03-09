@@ -12,6 +12,7 @@ use App\Http\Controllers\GrantApplicationController;
 use App\Http\Controllers\PendingApplicationController;
 use App\Http\Controllers\ApprovedApplicationController;
 use App\Http\Controllers\InterviewApplicationController;
+use App\Http\Controllers\SendMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +39,11 @@ Route::get('approval', [ApprovedApplicationController::class, 'index']);
 
 Auth::routes(['verify']);
 
-
-
 Route::get('/certificate', function () {
     return view('pages.certificate');
 });
 
 
+Route::group(['prefix' => 'sendmail'], function () {
+    Route::post('/', [SendMailController::class, 'create'])->name('compose');
+});

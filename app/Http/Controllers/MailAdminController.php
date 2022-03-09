@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminEmail;
+use App\Models\SendMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,8 @@ class MailAdminController extends Controller
     {
         $auth_id = Auth::user()->role_id;
         $mail = AdminEmail::where('role_id', $auth_id)->paginate(2);
-        return view('pages.mails', compact('mail'));
+        $genEmail = Sendmail::where('admin_id', auth()->user()->id)->paginate(2);          
+        return view('pages.mails', compact('mail', 'genEmail'));
         
         // if ($mail->count() > 0 ) 
         // else if ($mail->count() == 0 ) 
@@ -68,9 +70,9 @@ class MailAdminController extends Controller
     public function show($id)
     {
         // GET each mail ADMIN
-        $email = AdminEmail::where('id', $id)->get();
-        return view('backend.mailAdmin', compact('email'));
-        
+        $emails = AdminEmail::where('id', $id)->get();
+        $adminMails = SendMail::where('id', $id)->get();
+        return view('backend.mailAdmin', compact('emails', 'adminMails'));
     }
 
     /**

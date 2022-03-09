@@ -12,7 +12,13 @@
         class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
         role="dialog" id="modal">
         <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
-        <header class="flex justify-end">
+        <header class="flex justify-between">
+            <div class="flex items-center justify-center">
+                <h1 
+                    class="text-white dark:text-gray-700 font-bold text-3xl transition-colors duration-150 dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent active:text-gray-500 ">
+                    Compose Mail
+                </h1>
+            </div>
             <button
                 class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
                 aria-label="close" @click="closeModal">
@@ -25,64 +31,31 @@
         </header>
         <!-- Modal body -->
         <div class="mt-4 mb-6">
-            <form action="email/" method="post" class="mt-10">
+            <form action="{{ route('compose') }}" method="POST" id="mailForm" enctype="multipart/form-data" class="mt-10">
                 @csrf
 
-                <input type="hidden" name="email" >
-                {{-- To send to specific users --}}
-                <label id="mailField" class="block text-sm mb-4">
-                    <span class="text-gray-700 dark:text-gray-400">To</span>
-                    <input type="text" name="to" id="to"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        placeholder="To: monaly@gmail.com">
-                    @error('to')
-                        <span class="text-red-500 text-xs mt-4">
-                            {{ $message }}
-                        </span>
-                    @enderror
-                </label>
                 <label id="admin" class="hidden text-sm mb-4">
-                    <span class="text-gray-700 dark:text-gray-400">Role</span>
-                    @php
-                        $role = App\Models\Role::orderBy('id')->get()
-                    @endphp
-                    <select name="role"
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                            <option></option>
-                        @foreach ($role as $roles)
-                            <option value="{{ $roles->id }}">{{ $roles->continent }}</option>
-                        @endforeach
-                    </select>
-                    @error('role')
-                        <span class="text-red-500 text-xs mt-4">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <span class="text-gray-700 dark:text-gray-400">To Admin</span>
+                  
+                    <input type="text" name="toAdmin" id="admin"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="To: admin@gmail.com">
+                    <span id="msg1" class="text-red-500 text-xs mt-4"></span>
                 </label>
-                <label id="student" class="hidden text-sm mb-4">
-                    <span class="text-gray-700 dark:text-gray-400">Role</span>
-                    @php
-                        $role = App\Models\Role::orderBy('id')->get()
-                    @endphp
-                    <select name="role"
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                            <option></option>
-                        @foreach ($role as $roles)
-                            <option value="{{ $roles->id }}">{{ $roles->continent }}</option>
-                        @endforeach
-                    </select>
-                    @error('role')
-                        <span class="text-red-500 text-xs mt-4">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                <label id="student" class="hidden text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">To Student</span>
+                 
+                    <input type="text" name="toStudent" id="student"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="To: student@gmail.com">
+                    <span id="msg2" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <div class="flex mt-4 items-end justify-end gap-4">
-                    <div id="addAdmin" onclick="return document.getElementById('admin').classList.toggle('hidden'); document.getElementById('mailField').classList.toggle('hidden') "
+                    <div id="addAdmin" 
                             class="cursor-pointer w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                         Add Admin
                     </div>
-                    <div id="addStudent" onclick="return document.getElementById('student').classList.toggle('hidden'); document.getElementById('mailField').classList.toggle('hidden') "
+                    <div id="addStudent"
                             class="cursor-pointer w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                         Add Student
                     </div>
@@ -92,33 +65,21 @@
                     <input type="text" name="subject" id="subject"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="Enter subject">
-                    @error('subject')
-                        <span class="text-red-500 text-xs mt-4">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <span id="msg3" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <label class="block text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">From</span>
                     <input type="text" name="from" id="from" disabled
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="Lifeyieldersfoundation team">
-                    @error('from')
-                        <span class="text-red-500 text-xs mt-4">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <span id="msg4" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <label class="block text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">Leave a message</span>
                     <textarea style="height: 300px" name="message" id="message"
                         class="block resize-none w-full h-2/3 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                         rows="3" placeholder="You have been invited for an interview by....."></textarea>
-                    @error('message')
-                        <span class="text-red-500 text-xs mt-4">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <span id="msg5" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <div class="flex mt-10 text-sm items-right justify-end">
                     <footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">

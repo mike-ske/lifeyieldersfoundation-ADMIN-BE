@@ -11,6 +11,7 @@ class Award extends Model
 {
     use HasFactory;
 
+  
     public function approve()
     {
         return $this->belongsTo(Approve::class);

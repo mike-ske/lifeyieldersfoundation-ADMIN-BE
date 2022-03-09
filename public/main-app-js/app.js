@@ -1,23 +1,67 @@
 //Test jQuery
 $(function() {
-    $('#pending').on('load', function() {
-        $(this).prop('disabled', true);
-        $(this).css({ 'opacity': '0.2', 'background': 'transparent' })
+
+    $('#addAdmin').on('click', function() {
+        $('#admin').fadeIn()
+        $('#student').hide()
+    })
+    $('#addStudent').on('click', function() {
+        $('#student').fadeIn()
+        $('#admin').hide()
     })
 
-    //  detect mobile device
-    $('#test').on('click', function() {
-        console.log("<?php header('location: ../') ?>");
+    // $('#mailForm').on('submit', function(event) {
+    //     event.preventDefault()
 
-        // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        //     alert("YOU CANNOT VIEW THIS PAGE ON MOBILE AND TABLET SCREENS.");
-        //     window.location.replace("http://127.0.0.1:8000/");
-        //     document.write("You will be redirected to main page in 10 sec.........");
-        //     setTimeout(() => {}, 10000);
+    //     form = new FormData(this);
+    //     validateMail($('#mailForm')[0])
+    //     url = $(this).attr('action');
 
-        // } else {
-        //     // document.write("");
-        // }
+    //     $.ajax({
+    //         url: url,
+    //         method: 'POST',
+    //         data: form,
+    //         contentType: false,
+    //         processData: false,
+    //         success: function(result) {
+    //             result = JSON.parse(result);
+    //             console.log(result);
+    //         }
+    //     })
+    // })
 
-    })
+
+    // function validateMail(item) {
+    //     if (item.toAdmin.value === "") {
+    //         document.querySelector("#msg1").innerHTML =
+    //             "The admin email is required";
+    //     } else {
+    //         document.querySelector("#msg1").innerHTML = "";
+    //     }
+    //     if (item.toStudent.value === "") {
+    //         document.querySelector("#msg2").innerHTML =
+    //             "The student email is required";
+    //     } else {
+    //         document.querySelector("#msg2").innerHTML = "";
+    //     }
+    //     if (item.subject.value === "") {
+    //         document.querySelector("#msg3").innerHTML =
+    //             "Please provide a subject";
+    //     } else {
+    //         document.querySelector("#msg3").innerHTML = "";
+    //     }
+    //     // if (item.from.value === "") {
+    //     //     document.querySelector("#msg4").innerHTML =
+    //     //         "The from field is required";
+    //     // } else {
+    //     //     document.querySelector("#msg4").innerHTML = "";
+    //     // }
+    //     if (item.message.value === "") {
+    //         document.querySelector("#msg5").innerHTML =
+    //             "Please provide a message";
+    //     } else {
+    //         document.querySelector("#msg5").innerHTML = "";
+    //     }
+    // };
+
 });
