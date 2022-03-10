@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ApplicationController extends Controller
 {
@@ -28,6 +29,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
+        
         $approve = DB::table('lyf_approval')->where('status_id', 0)->orderBy('created_at')->get();
       
         foreach ($approve as $app) {
@@ -71,6 +73,7 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
+        
         $student = DB::table('lyf_application')->where('user_id', $id)->get();
         $bank = DB::table('lyf_bank')->where('user_id', $id)->get();
      

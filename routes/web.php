@@ -12,6 +12,7 @@ use App\Http\Controllers\GrantApplicationController;
 use App\Http\Controllers\PendingApplicationController;
 use App\Http\Controllers\ApprovedApplicationController;
 use App\Http\Controllers\InterviewApplicationController;
+use App\Http\Controllers\MailboxController;
 use App\Http\Controllers\SendMailController;
 
 /*
@@ -37,7 +38,7 @@ Route::resource('interview', InterviewApplicationController::class);
 Route::resource('award', AwardApplicationController::class);
 Route::get('approval', [ApprovedApplicationController::class, 'index']);
 
-Auth::routes(['verify']);
+Auth::routes(['verify' => true, 'register' => true]);
 
 Route::get('/certificate', function () {
     return view('pages.certificate');
@@ -47,3 +48,5 @@ Route::get('/certificate', function () {
 Route::group(['prefix' => 'sendmail'], function () {
     Route::post('/', [SendMailController::class, 'create'])->name('compose');
 });
+
+Route::post('/inbox', [MailboxController::class, 'sendMail'])->name('inbox');

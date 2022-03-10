@@ -8,6 +8,7 @@ use App\Models\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PendingApplicationController extends Controller
 {
@@ -31,6 +32,8 @@ class PendingApplicationController extends Controller
      */
     public function index()
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
         $pending_id = DB::table('lyf_approval')->where('status_id', 1)->get();
         if($pending_id->count() > 0){
             foreach ($pending_id as $value) {
@@ -74,6 +77,8 @@ class PendingApplicationController extends Controller
      */
     public function show($id)
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
         $student = DB::table('lyf_application')->where('user_id', $id)->get();
         $bank = DB::table('lyf_bank')->where('user_id', $id)->get();
         
@@ -100,6 +105,8 @@ class PendingApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
          // check for form submit data
          switch ($request->input('save')) {
             case 'mailsave':

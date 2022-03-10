@@ -71,19 +71,19 @@
                                                     $aprove_id  = DB::table('lyf_approval')->select('status_id')->where('application_id', $appValue->id)->value('status_id')
                                                 @endphp
                                                
+                                                @if ($aprove_id == 0)
+                                                    <span 
+                                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-yellow-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                                        Awaiting
+                                                    </span>
+                                                @endif
                                                 @if ($aprove_id == 1)
                                                     <span 
-                                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
+                                                        class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
                                                         Pending
                                                     </span>
                                                 @endif
                                                 @if ($aprove_id == 2)
-                                                    <span 
-                                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                                        Approved
-                                                    </span>
-                                                @endif
-                                                @if ($aprove_id == 0)
                                                     <span 
                                                         class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                                         Approved

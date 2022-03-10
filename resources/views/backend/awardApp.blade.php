@@ -83,7 +83,8 @@
                                         <div class="block mt-4  mb-4">
                                             @php
                                                  // get user score
-                                                $score = App\Models\Score::findOrfail($users->id)->value('score');
+                                                $score = App\Models\Score::where('user_id', $users->id)->value('score');
+                                                
                                             @endphp         
                                             @if ($score !== '')
                                                 {{-- @foreach ($score as $scores) --}}

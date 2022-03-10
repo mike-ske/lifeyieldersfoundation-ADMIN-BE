@@ -44,10 +44,15 @@
                                 </p>
 
                             </div>
-
+                            @if (session()->has('error'))
+                                {{ session('error') }}
+                            @endif
+                            @if (session()->has('status'))
+                                {{ session('status') }}
+                            @endif
                             {{-- MAIN APPLICATION INFO --}}
                             <div class="px-4 py-3 mb-8 sm:w-full  rounded-lg shadow-md">
-                                @if (session()->has('status'))
+                                {{-- @if (session()->has('status'))
                                     <span id="closeit" style="background:rgb(41 142 16 / 52%)"
                                         class="flex items-center mb-10 justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-lg ">
                                         <div class="flex items-center justify-center">
@@ -77,7 +82,7 @@
                                         <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
                                             aria-hidden="true">X</span>
                                     </span>
-                                @endif
+                                @endif --}}
                                 <div class="w-full flex justify-between items-center">
                                     <h2 class="my-6 text-l font-semibold text-gray-700 dark:text-gray-200">
                                         Account

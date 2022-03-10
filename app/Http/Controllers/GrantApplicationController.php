@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Grant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class GrantApplicationController extends Controller
 {
@@ -31,6 +32,8 @@ class GrantApplicationController extends Controller
      */
     public function index()
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
@@ -72,6 +75,9 @@ class GrantApplicationController extends Controller
      */
     public function show($id)
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
+
         $approve = Bank::where('approve_status', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -28,6 +29,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+
         $student = DB::table('lyf_account')->orderBy('created_at', 'desc')->paginate(2);
         if ($student) 
             return view('pages.student', compact('student'));
@@ -67,6 +69,9 @@ class StudentController extends Controller
      */
     public function show($id)
     {
+        
+         // Authorization access
+         Gate::authorize('edit-settings');
         $student = DB::table('lyf_account')->where('id', $id)->get();
         //show each student
         return view('backend.studentProfile', compact('student'));

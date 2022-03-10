@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Error;
 use App\Models\Award;
 use App\Models\Score;
-use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AwardApplicationController extends Controller
 {
@@ -33,6 +34,8 @@ class AwardApplicationController extends Controller
     public function index()
     {
         //
+        // Authorization access
+        Gate::authorize('edit-settings');
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
@@ -89,7 +92,8 @@ class AwardApplicationController extends Controller
             // echo "<script>alert('It is desktop or computer device')</script>";
            
         }
-
+        // Authorization access
+        Gate::authorize('edit-settings');
         // dd($score);
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {

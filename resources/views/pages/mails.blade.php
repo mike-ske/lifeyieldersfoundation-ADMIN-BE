@@ -9,6 +9,24 @@
                 Emails
             </h2>
             <!-- CTA -->
+            @if (session()->has('status'))
+                <span 
+                    class="flex items-center justify-between w-full px-4 py-2 mb-8 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none ">
+                    <div class="flex items-left justify-left w-full">
+                        <div id="alert" class="flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+                                </path>
+                            </svg>
+                            {{ session('status') }}
+                         </div>
+                    </div>
+                    <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
+                        aria-hidden="true">X</span>
+                </span>
+            @endif
             <a
                 class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple">
                 <div class="flex items-center">
@@ -66,7 +84,7 @@
                     </div>
 
                     {{-- send mail to users --}}
-                    <div id="messagebox" class="hidden w-full mb-10 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10"
+                    <div id="messagebox" class="w-full mb-10 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10"
                         >
                         <div class="relative w-full mr-3 rounded-full md:block">
                             {{-- side icons actions for mail --}}
@@ -83,7 +101,7 @@
                                 </span>
                             </a>
                             <div class=" mb-6">
-                                <form action="{{ route('compose') }}" method="POST" id="mailForm"
+                                <form action="{{ route('inbox') }}" method="POST" id="mailForm"
                                     enctype="multipart/form-data" class="mt-10">
                                     @csrf
 
@@ -93,6 +111,7 @@
                                         <input type="text" name="tomailer" id="mailer"
                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                             placeholder="To: admin@gmail.com">
+                                        
                                         <span id="msg1" class="text-red-500 text-xs mt-4"></span>
                                     </label>
                                     <label class="mt-4 block text-sm mb-4">
@@ -100,14 +119,14 @@
                                         <input type="text" name="subject" id="subject"
                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                             placeholder="Enter subject">
-                                        <span id="msg3" class="text-red-500 text-xs mt-4"></span>
+                                        <span id="msg2" class="text-red-500 text-xs mt-4"></span>
                                     </label>
                                     <label class="block text-sm mb-4">
                                         <span class="text-gray-700 dark:text-gray-400">From</span>
                                         <input type="text" name="from" id="from" disabled
                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                             placeholder="Lifeyieldersfoundation team">
-                                        <span id="msg4" class="text-red-500 text-xs mt-4"></span>
+                                        <span id="msg3" class="text-red-500 text-xs mt-4"></span>
                                     </label>
                                     <label class="block text-sm mb-4">
                                         <span class="text-gray-700 dark:text-gray-400">Leave a message</span>
@@ -115,7 +134,7 @@
                                             class="block resize-none w-full h-2/3 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                             rows="3"
                                             placeholder="You have been invited for an interview by....."></textarea>
-                                        <span id="msg5" class="text-red-500 text-xs mt-4"></span>
+                                        <span id="msg4" class="text-red-500 text-xs mt-4"></span>
                                     </label>
                                     <div class="w-full block mt-10 text-sm">
                                         <footer

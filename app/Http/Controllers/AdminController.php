@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -42,6 +43,8 @@ class AdminController extends Controller
      */
     public function create()
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
         //display frontend view
         return view('pages.admin');
     }
@@ -54,6 +57,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        
         // VALIDATE
         $user = $request->validate([
             'first_name' => 'required|string|max:40',
@@ -84,9 +88,18 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $user = User::where('id', $id)->get();
-        //display each admin profile
-        return view('backend.adminProfile', compact('user'));
+     
+        $authuser = Auth::user()->id;
+        if ("$authuser" !== $id) {
+            // Authorization access
+            Gate::authorize('edit-settings');
+        }
+        if ($authuser == $id) {
+            $user = User::where('id', $id)->get();
+            //display each admin profile
+            return view('backend.adminProfile', compact('user'));
+        }
+        
     
     }
 
@@ -134,7 +147,7 @@ class AdminController extends Controller
         if ($updated) 
             return back()->with('status', 'Admin account updated');
         else  
-            return back()->with('status', 'Failed to Update Admin account');
+            return back()->with('error', 'Failed to Update Admin account');
     }
 
     /**

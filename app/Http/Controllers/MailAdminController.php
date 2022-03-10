@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\AdminEmail;
 use App\Models\SendMail;
+use App\Models\AdminEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class MailAdminController extends Controller
 {
@@ -30,6 +31,9 @@ class MailAdminController extends Controller
      */
     public function index()
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
+        
         $auth_id = Auth::user()->role_id;
         $mail = AdminEmail::where('role_id', $auth_id)->paginate(2);
         $genEmail = Sendmail::where('admin_id', auth()->user()->id)->paginate(2);          
@@ -70,6 +74,8 @@ class MailAdminController extends Controller
      */
     public function show($id)
     {
+        // Authorization access
+        Gate::authorize('edit-settings');
         // GET each mail ADMIN
         $emails = AdminEmail::where('id', $id)->get();
         $adminMails = SendMail::where('id', $id)->get();
