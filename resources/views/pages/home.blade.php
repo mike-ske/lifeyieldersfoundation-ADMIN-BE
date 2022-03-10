@@ -71,12 +71,18 @@
                             Grants
                         </p>
                         @php
-                            $grant = App\Models\Grant::where('grant_status', 1)->orderBy('id')->value('amount')
+                            $gt = App\Models\Grant::where('grant_status', 1)->value('amount');
+                            // $grant = json_decode($grant, true);
+                            // $k = array_keys($grant);
+                            // dd($grant);
                         @endphp
-                        @if ($grant)
-                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{ $grant++ > 10000 ? '$'.$grant.'+' :  '$'.$grant }}
-                            </p>
+                        @if ($gt > 0)
+                            {{-- @foreach ($grant as $grants) --}}
+                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                    {{ $gt > 10000 ? '$'.$gt.'+' :  '$'.$gt }}
+                                </p>
+                                
+                            {{-- @endforeach --}}
                         @else
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                                 {{ '$'. 0 }}
@@ -203,10 +209,11 @@
                                         <td class="px-4 py-3 text-sm">
                                         @php
                                             $grant = App\Models\Grant::where('lyf_account_id', $studentValue->user_id)->orderBy('id')->value('amount')
+                                            
                                         @endphp
-                                        @if ($grant)
+                                        @if ($grant > 0)
                                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                                {{ $grant++ > 10000 ? '$'.$grant.'+' :  '$'.$grant }}
+                                                {{  $grant > 10000 ? '$'.$grant.'+' :  '$'.$grant  }}
                                             </p>
                                         @else
                                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">

@@ -35,7 +35,8 @@ class mailbox extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.mailbox');
+        return $this->subject($this->mailing->subject)
+                    ->markdown('emails.mailbox');
 
         // return $this->markdown('emails.mailbox', [
         //     'subject' => $this->mailing->subject,

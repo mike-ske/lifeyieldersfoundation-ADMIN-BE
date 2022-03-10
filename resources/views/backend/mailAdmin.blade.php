@@ -92,12 +92,12 @@
                                 <div class="max-w-full px-4 py-3 mb-8  rounded-lg shadow-md ">
                                     <div class="flex justify-between items-center py-3 text-sm mb-10">
                                         <h1 class="text-gray-600 font-bold dark:text-gray-400 text-2xl">
-                                            {{ $email->mail_subject }}
+                                            {{ $email->subject }}
                                         </h1>
                                         <p class="text-gray-600 dark:text-gray-400">{{ $email->created_at->diffForHumans() }}</p>
                                     </div>
                                     <p class="mb-4 text-gray-600 dark:text-gray-400">
-                                        {{ $email->mail_body }}
+                                        {{ $email->body }}
                                     </p>
                                 </div>
                             </div>

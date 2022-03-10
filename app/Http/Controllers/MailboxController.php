@@ -18,13 +18,7 @@ class MailboxController extends Controller
             'subject' => 'required|string|max:500',
             'message' => 'required'
         ]);
-        // dd($request);
-        // $validate = $request->validate([
-        //     'to' => 'required|email',
-        //     'subject' => 'required|string|max:500',
-        //     'body' => 'required'
-        // ]);
-        // send mail
+        
        if ($validate->fails()) {
             return response()->json(['message' => $validate->errors()]);
        }

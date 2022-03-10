@@ -79,18 +79,18 @@
                                                 Awaiting
                                             </span>
                                         @endif
-                                        {{-- @if ($aprove_id == 1)
+                                        @if ($aprove_id == 1)
                                             <span
-                                                class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-red-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
+                                                class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-red-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
                                                 Pending
                                             </span>
                                         @endif
                                         @if ($aprove_id == 2)
                                             <span
-                                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-red-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
                                                 Approved
                                             </span>
-                                        @endif --}}
+                                        @endif
                                     </td>
                                     <td class="px-4 py-3 text-sm">
                                         {{ Carbon\Carbon::parse($appValue->created_at)->diffForHumans() }}

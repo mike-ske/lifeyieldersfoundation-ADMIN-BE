@@ -96,9 +96,12 @@ class AwardApplicationController extends Controller
         Gate::authorize('edit-settings');
         // dd($score);
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
+     
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $user = DB::table('lyf_account')->where('id', $approved->id)->get();
+                
+                $user = DB::table('lyf_account')->where('id', $id)->get();
+                
                 return view('backend.awardApp', compact('user'));
             }
         }

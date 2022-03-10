@@ -151,7 +151,7 @@
                                         <span class="text-gray-700 dark:text-gray-400">Upload award</span>
                                         <input
                                             class="resize-none block w-full h-1/2 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray""
-                                                    type=" file" name="file" id="file">
+                                                    type="file" name="file" id="file">
                                         @error('file')
                                             <span class="text-red-500 text-xs mt-4">
                                                 {{ $message }}
@@ -220,7 +220,7 @@
                                         <div class="c absolute w-full h-full z-50 overflow-hidden">
                                             <div class=" fs6 fc2 sc0 ls0 ws1">
                                                 <input type="text" name="type" id="type" style="font-family: 'Newsreader', serif;
-                                                                    margin-top: 202px;
+                                                                    margin-top: 180px;
                                                                     font-size: 24px;
                                                                     text-align: center;
                                                                     color: #cd9340;
@@ -231,12 +231,12 @@
 
                                             <div class="t6 x8 ya fs0 fc2 sc0 ls0 ws1">
                                                 <input type="text" name="username" id="username"
-                                                    style="text-align:center;background-color:transparent;margin-top: 80px;font-size:70px!important;font-family:'Sacramento',cursive;padding-bottom:0;line-height:1;"
+                                                    style="text-align:center;background-color:transparent;margin-top: 68px;font-size:70px!important;font-family:'Sacramento',cursive;padding-bottom:0;line-height:1;"
                                                     value="Aileen Nathania"
                                                     class="block mx-auto h-1/2 rounded-md mt-1 text-sm form-input focus:outline-none">
                                             </div>
                                             <div class=" flex justify-between items-center" ;
-                                                style="width:325px;margin:auto;text-align:center;left:34px;position:relative;margin-top: 11px;">
+                                                style="width:250px;margin:auto;text-align:center;left:34px;position:relative;">
                                                 <div>
                                                     <div class="font-bold x9 yb fc2 sc0 ls0 ws1 text-tiny text-right">
                                                         <input type="text" name="date" id="date"
@@ -256,7 +256,7 @@
                                                 </div>
                                             </div>
                                             <div class=" flex justify-between items-center"
-                                                style="width:155px;margin: 100px auto 0;font-size:7px;">
+                                                style="width:155px;margin: 76px auto 0;font-size:7px;">
                                                 <div>
                                                     <div class="font-bold x9 yb ff7 fc2 sc0 ls0 ws1 text-tiny text-right">
                                                         <input type="text" name="ceo" id="ceo"

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" :class="{ 'theme-dark': dark }" x-data="data()" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en" class="theme-dark" :class="{ 'theme-dark': dark }" x-data="data()" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+    {{-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.4/dist/flowbite.min.css" /> --}}
     <!-- Favicon icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/favicon_io/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon_io/favicon-32x32.png') }}">
@@ -41,6 +41,15 @@
             // tinycomments_mode: 'embedded',
             // tinycomments_author: 'Lifeyieldersfoundation',
         });
+    </script>
+
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -874,6 +883,68 @@
         }
 
     </style>
+
+    <style>
+
+        .loader-overlay {
+        background-color: rgba(0,0,0,0.9);
+        height: 100%;
+        width: 100%;
+        transition: opacity .5s ease-in-out;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        }
+
+        .loader-container {
+        height: 75px;
+        width: 70px;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        }
+
+        .block1, .block2, .block3, .block4 {
+        height: 50px;
+        width: 12px;
+        background-color: white;
+        display: inline-block;
+        transform: translateY(25px);
+        }
+
+        @keyframes blockMove {
+        to { transform: translateY(0); }
+        }
+
+        .block1 {
+        animation: blockMove .5s ease infinite alternate;
+        }
+
+        .block2 {
+        animation: blockMove .5s ease .08s infinite alternate;
+        }
+
+        .block3 {
+        animation: blockMove .5s ease .16s infinite alternate;
+        }
+
+        .block4 {
+        animation: blockMove .5s ease .24s infinite alternate;
+        }
+
+    </style>
 </head>
 
 <body>
+
+    <div id="preloader" class="hidden loader-overlay">
+        <div class="loader-container">
+            <div class="block1"></div>
+            <div class="block2"></div>
+            <div class="block3"></div>
+            <div class="block4"></div>
+        </div>
+    </div>

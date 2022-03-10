@@ -34,7 +34,7 @@ class ApplicationController extends Controller
       
         foreach ($approve as $app) {
             // dd($app);
-            $application = DB::table('lyf_application')->where('id', $app->application_id)->paginate();
+            $application = DB::table('lyf_application')->paginate();
         }
         if (!isset($application))
             return "<script>alert('No new student application')</script>" . back();
