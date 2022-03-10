@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\Console\Input\Input;
 
 class AwardApplicationController extends Controller
 {
@@ -135,11 +136,12 @@ class AwardApplicationController extends Controller
                 $request->validate([
                     'awardtype' => 'required',
                 ]);
+
                 $award = Award::where('user_id', $id)->update([
-                    'award_type' => $request->award,
+                    'award_type' => $request->awardtype,
                     'award_status' => 1,
                 ]);
-               if ($award->count() > 0) 
+               if ($award > 0) 
                    return back()->with('status', 'Successfull! Student AWARDED');
                 else
                     return back()->with('error', 'Failed to award student');
@@ -152,8 +154,9 @@ class AwardApplicationController extends Controller
                     'message' => 'required|max:2000',
                 ]);
 
-                $data = Award::where('lyf_approval_id', 2)->update([
-                    'award_file' => $request->file,
+                $file = $request->file;
+                $data = Award::where('user_id', $id)->update([
+                    'award_file' => base64_encode($file)
                 ]);
 
                 $mail = DB::table('lyf_email')->where('user_id', $id)->update([
@@ -163,6 +166,13 @@ class AwardApplicationController extends Controller
                 ]);
                 if($data !== '' || $mail !== '')
                     return back()->with('status', 'Success! Award Certificate Added');
+                break;
+            case 'certificate':
+
+                dd($request);
+
+                // if($data !== '' || $mail !== '')
+                //     return back()->with('status', 'Success! Award Certificate Added');
                 break;
 
             default:
@@ -178,6 +188,7 @@ class AwardApplicationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // delete record
+        
     }
 }

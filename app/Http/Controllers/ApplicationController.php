@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -183,6 +184,14 @@ class ApplicationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // DELETE RECORD
+        $deleted = DB::table('lyf_application')->where('id', $id)->delete();
+        $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
+        $granttb = Grant::where('lyf_account_id', $id)->delete();
+        if($deleted !== '' ||  $granttb !== '' || $approvaltb !== '')
+            return back()->with('status', 'Application deleted');
+        else
+            return back()->with('error', 'Failed to delete application');
+    
     }
 }

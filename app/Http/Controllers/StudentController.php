@@ -97,6 +97,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd(DB::table('lyf_account')->where('id', $id)->update(['fname' =>  $request->first_name]) );
         // validate request 
         $request->validate([
             'about' => 'required|string|max:2000',
@@ -107,16 +108,17 @@ class StudentController extends Controller
         ]);
         // save data 
         $updated = DB::table('lyf_account')->where('id', $id)->update([
-            'about' =>  $request->about,
             'fname' =>  $request->first_name,
             'lname' =>  $request->last_name,
             'email' =>  $request->email,
-            'password' =>  Hash::make($request->password)
+            'password' =>  Hash::make($request->password),
+            'about' =>  $request->about
         ]);
-        if ($updated) 
-            return back()->with('student', 'Student account updated');
+        
+        if ($updated > 0) 
+            return back()->with('status', 'Student account updated');
         else  
-            return back()->with('student', 'Failed to Update student account');
+            return back()->with('error', 'Failed to Update student account');
     }
 
     /**
