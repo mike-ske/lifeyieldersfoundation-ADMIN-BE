@@ -37,7 +37,7 @@ class PendingApplicationController extends Controller
         $pending_id = DB::table('lyf_approval')->where('status_id', 1)->get();
         if($pending_id->count() > 0){
             foreach ($pending_id as $value) {
-               $pending =  DB::table('lyf_application')->paginate(2);
+               $pending =  DB::table('lyf_application')->orderBy('id', 'DESC')->paginate(2);
             }
         }
         // dd( $pending_id);
@@ -129,25 +129,7 @@ class PendingApplicationController extends Controller
             case 'pend':
 
                 $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 2]);
-                
-                Interview::insert([
-                    'lyf_approval_id' => 2,
-                    'user_id' => $id
-                ]);
-                DB::table('banks')->insert([
-                    'application_id' => $request->pendinguser,
-                    'user_id' => $id
-                ]);
-                // APPROVE THE AWARD TABLE
-                Award::insert([
-                    'lyf_approval_id' => 2,
-                    'user_id' => $id,
-                ]);
-                Grant::insert([
-                    'lyf_account_id' => $id,
-                    'award_id' => 0,
-                ]);
-                
+             
                 if($data !== '')
                     return back()->with('status', 'Application APPROVED');
                 break;

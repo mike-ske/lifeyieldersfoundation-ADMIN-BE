@@ -164,7 +164,7 @@
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             @php
-                                $student = DB::table('lyf_application')->paginate(2)
+                                $student = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate(50)
                             @endphp
                             @if ($student->count() > 0)
                                 @foreach ($student as $studentValue)

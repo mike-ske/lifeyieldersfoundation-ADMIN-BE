@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Grant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admin = User::orderBy('created_at')->paginate(2);
+        $admin = User::orderBy('id', 'DESC')->paginate(50);
         return view('pages.profile', compact('admin'));
     }
 
@@ -158,6 +159,12 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+           // DELETE RECORD
+           $deleted = User::where('id', $id)->delete();
+           if($deleted)
+               return back()->with('status', 'Success! Account deleted');
+           else
+               return back()->with('error', 'Failed to delete account');
+       
     }
 }

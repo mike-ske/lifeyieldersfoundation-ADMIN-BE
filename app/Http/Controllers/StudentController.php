@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -30,7 +31,7 @@ class StudentController extends Controller
     public function index()
     {
 
-        $student = DB::table('lyf_account')->orderBy('created_at', 'desc')->paginate(2);
+        $student = DB::table('lyf_account')->orderBy('id', 'DESC')->paginate(50);
         if ($student) 
             return view('pages.student', compact('student'));
         else 
@@ -97,7 +98,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd(DB::table('lyf_account')->where('id', $id)->update(['fname' =>  $request->first_name]) );
+        // dd($id);
         // validate request 
         $request->validate([
             'about' => 'required|string|max:2000',
@@ -106,6 +107,7 @@ class StudentController extends Controller
             'email' =>  'required|string|max:40|email|unique:users',
             'password' => 'required|string|max:40'
         ]);
+        
         // save data 
         $updated = DB::table('lyf_account')->where('id', $id)->update([
             'fname' =>  $request->first_name,
@@ -129,6 +131,14 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // DELETE RECORD
+        $deleted = DB::table('lyf_account')->where('id', $id)->delete();
+        $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
+        $granttb = Grant::where('lyf_account_id', $id)->delete();
+        $bank = DB::table('lyf_bank')->where('user_id', $id)->delete();
+        if($deleted !== '' ||  $granttb !== '' || $approvaltb !== ''  || $bank !== '')
+            return back()->with('status', 'Success! Student deleted');
+        else
+            return back()->with('error', 'Failed to delete application');
     }
 }

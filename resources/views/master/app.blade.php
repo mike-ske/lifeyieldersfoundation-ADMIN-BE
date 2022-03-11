@@ -8,10 +8,10 @@
 
         {{-- ALL CONTENTS ARE INJECTED HERE --}}
         @yield('contents')
+        
+        @include('pages.modal')
     </div>
 </div>
 
-
-@include('pages.modal')
   
 @include('layout.footer')

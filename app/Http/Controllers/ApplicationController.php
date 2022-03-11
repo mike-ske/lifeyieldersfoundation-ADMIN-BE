@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grant;
+use App\Models\Score;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class ApplicationController extends Controller
       
         foreach ($approve as $app) {
             // dd($app);
-            $application = DB::table('lyf_application')->paginate();
+            $application = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate();
         }
         if (!isset($application))
             return "<script>alert('No new student application')</script>" . back();
@@ -129,15 +130,6 @@ class ApplicationController extends Controller
 
                 $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 1]);
                 
-                DB::table('scores')->insert([
-                    'user_id' => $request->userId,
-                    'application_id' => $request->pendinguser,
-                ]);
-                DB::table('banks')->insert([
-                    'user_id' => $request->userId,
-                    'application_id' => $id,
-                ]);
-               
                 if($data !== '')
                     return back()->with('status', 'Application pending');
                 break;
@@ -148,16 +140,22 @@ class ApplicationController extends Controller
 
                 break;
             case 'score':
-                // validate score
-                $request->validate([
-                    'score' => 'required|integer|max:100|unique:scores',
-                ]);
-                // Insert to database
-                DB::table('scores')->where('application_id', $request->appId)->update([
-                    'score' => $request->score
-                ]);
-                return back()->with('status', 'Student Score added');
-                break;
+                    // validate score
+                    $request->validate([
+                        'score' => 'required|integer|max:100|unique:scores',
+                    ]);
+
+                    // Insert to database
+                    $updated = Score::where('application_id', $id)->update([
+                        'score' => $request->score
+                    ]);
+
+                    if ($updated > 0) 
+                        return back()->with('status', 'Student Score added');
+                    else  
+                        return back()->with('error', 'Failed to Add Students Score');
+
+                        break;
             case 'bankpending':
                 $data = DB::table('banks')->where('application_id', $id)->update(['approve_status' => 1, 'bank' =>  $request->pendinguser]);
                 if($data !== '')

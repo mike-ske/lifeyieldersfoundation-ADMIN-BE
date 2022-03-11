@@ -11,7 +11,7 @@
                         Welcome to {{ $studentValue->fname }} {{ $studentValue->lname }} Profile
                     </h2>
                     <div class="w-full sm:flex h-full">
-                   
+
                         <div class="w-2/6 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
                             @if ($studentValue->image === '')
                                 <div class="relative w-full mr-3 rounded-full md:block">
@@ -38,7 +38,12 @@
                             </p>
 
                         </div>
-
+                        @if (session()->has('error'))
+                            {{ session('error') }}
+                        @endif
+                        @if (session()->has('status'))
+                            {{ session('status') }}
+                        @endif
                         {{-- MAIN APPLICATION INFO --}}
                         <div class="px-4 py-3 mb-8 sm:w-full  rounded-lg shadow-md">
                             @if (session()->has('status'))
@@ -53,23 +58,26 @@
                                         </svg>
                                     </div>
                                     {{ session('status') }}
-                                    <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
+                                    <span class="ml-2 cursor-pointer"
+                                        onclick="document.getElementById('closeit').style.display = 'none' "
                                         aria-hidden="true">X</span>
                                 </span>
                             @endif
                             @if (session()->has('error'))
                                 <span id="closeit" style="background:rgb(142 16 16)"
-                                   class="flex items-center mb-10 justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-700 border border-transparent rounded-lg ">
-                                   <div class="flex items-center justify-center">
-                                       <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                          xmlns="http://www.w3.org/2000/svg">
-                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    class="flex items-center mb-10 justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-700 border border-transparent rounded-lg ">
+                                    <div class="flex items-center justify-center">
+                                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                            </path>
                                         </svg>
                                         {{ session('error') }}
-                                </div>
-                                <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
-                                    aria-hidden="true">X</span>
+                                    </div>
+                                    <span class="ml-2 cursor-pointer"
+                                        onclick="document.getElementById('closeit').style.display = 'none' "
+                                        aria-hidden="true">X</span>
                                 </span>
                             @endif
 
@@ -96,8 +104,7 @@
                                 </label>
                                 <label class="block text-sm mb-4">
                                     <span class="text-gray-700 dark:text-gray-400">First name</span>
-                                    <input type="text" value="{{ $studentValue->fname }}"
-                                        name="first_name"
+                                    <input type="text" value="{{ $studentValue->fname }}" name="first_name"
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         placeholder="John Paul">
                                     @error('first_name')
@@ -108,8 +115,7 @@
                                 </label>
                                 <label class="block text-sm mb-4">
                                     <span class="text-gray-700 dark:text-gray-400">Last name</span>
-                                    <input type="text" value="{{ $studentValue->lname }}"
-                                        name="last_name"
+                                    <input type="text" value="{{ $studentValue->lname }}" name="last_name"
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         placeholder="John Paul">
                                     @error('last_name')
@@ -147,9 +153,9 @@
                                                 class="px-3 mr-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                 Update
                                             </button>
-                                            <input type="reset" value="Clear" 
+                                            <input type="reset" value="Clear"
                                                 class="px-3 py-1 text-sm font-medium cursor-pointer leading-5 text-white transition-colors duration-150 bg-yellow-600 border border-transparent rounded-md active:bg-yellow-600 hover:bg-orange-700 focus:outline-none focus:shadow-outline-purple">
-                                               
+
                                         </div>
                                     </label>
                                 </div>
@@ -162,4 +168,5 @@
             @endforeach
         @endif
     </main>
+
 @endsection

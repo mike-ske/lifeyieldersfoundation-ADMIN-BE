@@ -40,7 +40,7 @@ class AwardApplicationController extends Controller
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $approveuser = DB::table('lyf_application')->paginate(2);
+                $approveuser = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate(50);
                 return view('pages.award', compact('approveuser'));
             }
         }
@@ -188,7 +188,14 @@ class AwardApplicationController extends Controller
      */
     public function destroy($id)
     {
-        // delete record
+        // DELETE RECORD
+        $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
+        $granttb = Award::where('lyf_account_id', $id)->delete();
+        $bank = DB::table('lyf_bank')->where('user_id', $id)->delete();
+        if($approvaltb !== '' ||  $granttb !== '' || $bank !== ''  || $bank !== '')
+            return back()->with('status', 'Success! Student deleted');
+        else
+            return back()->with('error', 'Failed to delete application');
         
     }
 }
