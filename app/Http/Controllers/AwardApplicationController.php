@@ -154,9 +154,9 @@ class AwardApplicationController extends Controller
                     'message' => 'required|max:2000',
                 ]);
 
-                $file = $request->file;
+                $file = $request->file->path();
                 $data = Award::where('user_id', $id)->update([
-                    'award_file' => base64_encode($file)
+                    'award_file' => base64_encode(file_get_contents($file))
                 ]);
 
                 $mail = DB::table('lyf_email')->where('user_id', $id)->update([
@@ -187,12 +187,13 @@ class AwardApplicationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
         // DELETE RECORD
         $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
-        $granttb = Award::where('lyf_account_id', $id)->delete();
+        $apptb = DB::table('lyf_application')->where('user_id', $id)->delete();
+        $granttb = Award::where('user_id', $id)->delete();
         $bank = DB::table('lyf_bank')->where('user_id', $id)->delete();
-        if($approvaltb !== '' ||  $granttb !== '' || $bank !== ''  || $bank !== '')
+        if($approvaltb > 0 &&  $granttb > 0  && $bank > 0   && $bank > 0  && $apptb > 0 )
             return back()->with('status', 'Success! Student deleted');
         else
             return back()->with('error', 'Failed to delete application');

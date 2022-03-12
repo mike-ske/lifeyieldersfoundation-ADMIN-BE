@@ -98,13 +98,12 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($id);
         // validate request 
         $request->validate([
             'about' => 'required|string|max:2000',
             'fname' => 'required|string|max:40',
             'lname' =>  'required|string|max:40',
-            'email' =>  'required|string|max:40|email|unique:users',
+            'email' =>  'required|string|min:5|email',
             'password' => 'required|string|max:40'
         ]);
         
@@ -136,9 +135,10 @@ class StudentController extends Controller
         $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
         $granttb = Grant::where('lyf_account_id', $id)->delete();
         $bank = DB::table('lyf_bank')->where('user_id', $id)->delete();
-        if($deleted !== '' ||  $granttb !== '' || $approvaltb !== ''  || $bank !== '')
+        if($deleted > 0 && $granttb > 0 && $approvaltb > 0 && $bank > 0)
             return back()->with('status', 'Success! Student deleted');
         else
             return back()->with('error', 'Failed to delete application');
     }
+
 }

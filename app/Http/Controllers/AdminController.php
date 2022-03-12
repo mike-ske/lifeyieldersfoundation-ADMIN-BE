@@ -33,7 +33,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admin = User::orderBy('id', 'DESC')->paginate(50);
+        $admin = User::where('role_id', '>=', '2')->orderBy('id', 'DESC')->paginate(50);
         return view('pages.profile', compact('admin'));
     }
 
@@ -124,27 +124,37 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->image->getClientOriginalName());
-        // validate request 
-        $request->validate([
-            'first_name' => 'required|string|max:2000',
-            'last_name' => 'required|string|max:40',
-            'email' =>  'required|string|max:40|email',
-            'password' =>  'required|string|max:40',
-            'image' => 'required|image|mimes:jpg,png,gif,jpeg',
-            'role' => 'required|max:40'
-        ]);
-        // save data 
-        $updated = User::where('id', $id)->update([
-            'first_name' =>  $request->first_name,
-            'last_name' =>  $request->last_name,
-            'email' =>  $request->email,
-            'password' => Hash::make($request->password),
-            'image' =>  base64_encode(file_get_contents($request->image->getClientOriginalName())),
-            'role' =>  $request->role
-        ]);
+   
+        if($request->image !== ''){
+            $request->validate([
+                'image' => 'required|image|mimes:jpg,png,gif,jpeg',
+            ]);
+            ##### update image
+            $imgPath = $request->image->path();
+            $updated = User::where('id', $id)->update([
+                'image' =>  base64_encode(file_get_contents($imgPath))
+            ]);
+        }
+        else 
+        {
+            // validate request 
+            $request->validate([
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'email' =>  'required|string|email',
+                'password' =>  'required|string',
+                'role' => 'required|max:40'
+            ]);
+            // save data
+            $updated = User::where('id', $id)->update([
+                'first_name' =>  $request->first_name,
+                'last_name' =>  $request->last_name,
+                'email' =>  $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' =>  $request->role
+            ]);
+        }
 
-        
         if ($updated) 
             return back()->with('status', 'Admin account updated');
         else  

@@ -19,7 +19,7 @@
                             </path>
                         </svg>
                         {{ session('status') }}
-                     </div>
+                    </div>
                     <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
                         aria-hidden="true">X</span>
                 </span>
@@ -33,7 +33,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                    {{ session('error') }}
+                        {{ session('error') }}
                     </div>
                     <span class="ml-2 cursor-pointer" onclick="document.getElementById('closeit').style.display = 'none' "
                         aria-hidden="true">X</span>
@@ -171,41 +171,66 @@
                                 Credentials
                             </h2>
                             @php
-                                $pdf = base64_decode($students->cv);
-                                // dd($pdf);
+                                // $pdf = App\Models\Award::where('user_id', 10)->value('award_file');
+                                $certificate = base64_decode($students->certificate);
+                                $store = Illuminate\Support\Facades\Storage::disk('public')->put('pdf_file/certificate.jpeg', $certificate, ['Content-Type' => 'image/jpeg']);
+                                
+                                // TRANSCRIPT
+                                $transcript = base64_decode($students->transcript);
+                                $store = Illuminate\Support\Facades\Storage::disk('public')->put('pdf_file/transcript.jpeg', $transcript, ['Content-Type' => 'image/jpeg']);
+                                
+                                // ID CARD
+                                $idcard = base64_decode($students->idCard);
+                                $store = Illuminate\Support\Facades\Storage::disk('public')->put('pdf_file/idcard.jpeg', $idcard, ['Content-Type' => 'image/jpeg']);
+                                
+                                // EXAMCO
+                                $examco = base64_decode($students->examco);
+                                $store = Illuminate\Support\Facades\Storage::disk('public')->put('pdf_file/examco.pdf', $examco, ['Content-Type' => 'application/pdf']);
+                                
+                                // CV
+                                $cv = base64_decode($students->cv);
+                                $store = Illuminate\Support\Facades\Storage::disk('public')->put('pdf_file/cv.pdf', $cv, ['Content-Type' => 'application/pdf']);
+                                
                             @endphp
                             <div class="grid sm:flex sm:justify-between sm:items-center gap-4 mb-4">
 
-                                <a href="#" target="_blank" data-url="{{ $students->certificate }}"
+                                <a href="{{ URL('storage/pdf_file/certificate.jpeg') }}" target="_blank"
                                     class="w-full sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
                                     <h5>View JPEG</h5>
                                     <p class="text-tiny font-semibold font-sans">School Certificate</p>
                                 </a>
-                                <a href="#" target="_blank"
+                                <a href="{{ URL('storage/pdf_file/transcript.jpeg') }}" target="_blank"
                                     class="w-full sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
                                     <h5>View JPEG</h5>
                                     <p class="text-tiny font-semibold font-sans">School Transcript</p>
                                 </a>
-                                <a href="#" target="_blank"
+                                <a href="{{ URL('storage/pdf_file/idcard.jpeg') }}" target="_blank"
                                     class="w-full sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
                                     <h5>View JPEG</h5>
                                     <p class="text-tiny font-semibold font-sans">ID Card</p>
                                 </a>
                             </div>
                             <div class="grid sm:flex sm:justify-between sm:items-center gap-4">
-                                <a href="#" target="_blank"
+                                <a href="{{ URL('storage/pdf_file/examco.pdf') }}" target="_blank"
                                     class="w-full sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
                                     <h5>View PDF</h5>
                                     <p class="text-tiny font-semibold font-sans">Examco Certificate</p>
                                 </a>
-                                <a href="#" target="_blank"
+                                <a href="{{ URL('storage/pdf_file/cv.pdf') }}" target="_blank"
                                     class="w-full sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
                                     <h5>View PDF</h5>
                                     <p class="text-tiny font-semibold font-sans">CV / Resume</p>
                                 </a>
-                                <a href="#" target="_blank"
-                                    class="w-full sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
-                                    <h5>View PDF</h5>
+                                <a target="_blank"
+                                    class="w-full flex items-center justify-center sm:w-2/5 h-auto border-4 border-dotted hover:border-gray-100 cursor-pointer border-gray-400 rounded-md p-6 text-gray-600 text-center">
+                                    <h5 class="tex-xl">
+                                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </h5>
                                     <p></p>
                                 </a>
                             </div>

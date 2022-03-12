@@ -95,7 +95,7 @@
                     </div>
 
                     {{-- send mail to users --}}
-                    <div id="messagebox" class="w-full mb-10 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10"
+                    <div id="messagebox" class="hidden w-full mb-10 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10"
                         >
                         <div class="relative w-full mr-3 rounded-full md:block">
                             {{-- side icons actions for mail --}}
@@ -111,7 +111,7 @@
                                     </svg>
                                 </span>
                             </a>
-                            <div class=" mb-6">
+                            <div class="mb-6">
                                 <form action="{{ route('inbox') }}" method="POST" id="mailForm"
                                     enctype="multipart/form-data" class="mt-10">
                                     @csrf

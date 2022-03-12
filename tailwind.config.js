@@ -17,7 +17,8 @@ module.exports = {
                 },
             },
         }),
-        darkMode: 'class',
+        // darkMode: 'class',
+        darkMode: 'media',
         colors: {
             transparent: 'transparent',
             white: '#ffffff',

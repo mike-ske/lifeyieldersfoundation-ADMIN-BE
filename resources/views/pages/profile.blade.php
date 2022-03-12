@@ -172,9 +172,6 @@
         </div>
     </main>
 
-
-
-
     {{-- DELETE MODAL --}}
 
     <div class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center md:inset-0 h-modal sm:h-full"

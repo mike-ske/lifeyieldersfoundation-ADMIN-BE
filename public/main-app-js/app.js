@@ -36,11 +36,11 @@ $(function() {
                 $("input[type=text], input[type=password], input[type=email], input[type=number],textarea, select").val("");
                 if (result.success) {
                     $('#alert').html(result.success)
-                        // $('#popup-modal').removeClass('hidden');
-                        // $('#popup-modal').addClass('flex');
                     toggleModal('popup-modal', true);
                 }
-
+                setInterval(() => {
+                    window.location.reload()
+                }, 2000);
                 $("input[type=text], input[type=password], input[type=email], input[type=number],textarea, select").val("");
             }
         })
@@ -54,24 +54,13 @@ $(function() {
         } else {
             document.querySelector("#msg1").innerHTML = "";
         }
-        // if (item.toStudent.value === "") {
-        //     document.querySelector("#msg2").innerHTML =
-        //         "The student email is required";
-        // } else {
-        //     document.querySelector("#msg2").innerHTML = "";
-        // }
         if (item.subject.value === "") {
             document.querySelector("#msg3").innerHTML =
                 "Please provide a subject";
         } else {
             document.querySelector("#msg3").innerHTML = "";
         }
-        // if (item.from.value === "") {
-        //     document.querySelector("#msg4").innerHTML =
-        //         "The from field is required";
-        // } else {
-        //     document.querySelector("#msg4").innerHTML = "";
-        // }
+
         if (item.message.value === "") {
             document.querySelector("#msg5").innerHTML =
                 "Please provide a message";
@@ -81,3 +70,14 @@ $(function() {
     };
 
 });
+
+
+var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+// Change the icons inside the button based on previous settings
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    themeToggleLightIcon.classList.remove('hidden');
+} else {
+    themeToggleDarkIcon.classList.remove('hidden');
+}
