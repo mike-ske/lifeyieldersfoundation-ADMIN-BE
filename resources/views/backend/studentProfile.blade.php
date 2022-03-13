@@ -38,12 +38,7 @@
                             </p>
 
                         </div>
-                        @if (session()->has('error'))
-                            {{ session('error') }}
-                        @endif
-                        @if (session()->has('status'))
-                            {{ session('status') }}
-                        @endif
+                  
                         {{-- MAIN APPLICATION INFO --}}
                         <div class="px-4 py-3 mb-8 sm:w-full  rounded-lg shadow-md">
                             @if (session()->has('status'))
@@ -56,8 +51,8 @@
                                                 d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
                                             </path>
                                         </svg>
+                                        {{ session('status') }}
                                     </div>
-                                    {{ session('status') }}
                                     <span class="ml-2 cursor-pointer"
                                         onclick="document.getElementById('closeit').style.display = 'none' "
                                         aria-hidden="true">X</span>

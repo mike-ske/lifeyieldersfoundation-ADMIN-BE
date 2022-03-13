@@ -173,7 +173,7 @@
                         <div class="w-full sm:w-2/5 ">
                             <div class="w-full sm:flex bg-white dark:bg-gray-800 mt-10">
                                 {{-- MAIN APPLICATION INFO --}}
-                                <form action="/grants/{{ $bankdetails->id }}" method="post"
+                                <form action="/grants/{{ $bankdetails->user_id }}" method="post"
                                     class="px-4 py-3 sm:w-full  rounded-lg shadow-md">
                                     @csrf
                                     @method('PATCH')

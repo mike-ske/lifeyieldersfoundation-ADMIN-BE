@@ -28,21 +28,20 @@ class MailAdminController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
      */
     public function index()
     {
         // Authorization access
         Gate::authorize('edit-settings');
         
-        $auth_id = Auth::user()->role_id;
-        $mail = AdminEmail::where('role_id', $auth_id)->paginate(2);
-        $genEmail = Sendmail::where('admin_id', auth()->user()->id)->paginate(2);          
-        return view('pages.mails', compact('mail', 'genEmail'));
+        $mail = AdminEmail::paginate(50);
+        // $genEmail = Sendmail::paginate(50);          
+        return view('pages.mails', compact('mail'));
         
         // if ($mail->count() > 0 ) 
         // else if ($mail->count() == 0 ) 
         //     return view('pages.mails', ['mail' => 'No mail found']);
-        
     }
 
     /**
@@ -78,8 +77,8 @@ class MailAdminController extends Controller
         Gate::authorize('edit-settings');
         // GET each mail ADMIN
         $emails = AdminEmail::where('id', $id)->get();
-        $adminMails = SendMail::where('id', $id)->get();
-        return view('backend.mailAdmin', compact('emails', 'adminMails'));
+        // $adminMails = SendMail::where('id', $id)->get();
+        return view('backend.mailAdmin', compact('emails'));
     }
 
     /**
@@ -111,8 +110,13 @@ class MailAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $mail = AdminEmail::where('id', $request->id)->delete();
+        if($mail > 0  )
+            return back()->with('status', 'Success! Mail deleted');
+        else
+            return back()->with('error', 'Failed to delete mail');
+        
     }
 }

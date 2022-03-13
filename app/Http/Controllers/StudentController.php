@@ -98,15 +98,16 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // validate request 
-        $request->validate([
-            'about' => 'required|string|max:2000',
-            'fname' => 'required|string|max:40',
-            'lname' =>  'required|string|max:40',
-            'email' =>  'required|string|min:5|email',
-            'password' => 'required|string|max:40'
-        ]);
         
+        // validate request 
+        $r = $request->validate([
+            'about' => 'required|string',
+            'first_name' => 'required|string|min:5',
+            'last_name' => 'required|string|min:5',
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+       
         // save data 
         $updated = DB::table('lyf_account')->where('id', $id)->update([
             'fname' =>  $request->first_name,
@@ -128,14 +129,14 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         // DELETE RECORD
-        $deleted = DB::table('lyf_account')->where('id', $id)->delete();
-        $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
-        $granttb = Grant::where('lyf_account_id', $id)->delete();
-        $bank = DB::table('lyf_bank')->where('user_id', $id)->delete();
-        if($deleted > 0 && $granttb > 0 && $approvaltb > 0 && $bank > 0)
+        $deleted = DB::table('lyf_account')->where('id', $request->id)->delete();
+        $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->delete();
+        $granttb = Grant::where('lyf_account_id', $request->id)->delete();
+        $bank = DB::table('lyf_bank')->where('user_id', $request->id)->delete();
+        if($deleted > 0 || $granttb > 0 || $approvaltb > 0 || $bank > 0)
             return back()->with('status', 'Success! Student deleted');
         else
             return back()->with('error', 'Failed to delete application');

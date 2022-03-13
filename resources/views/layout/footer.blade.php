@@ -9,6 +9,7 @@
 <script src="{{ asset('js/app.js')  }}" ></script>
 <script src="{{ asset('/flowbite/dist/flowbite.js')  }}" ></script>
 <script src="{{ asset('main-app-js/app.js')  }}" ></script>
+<script src="{{ asset('main-app-js/delete.js')  }}" ></script>
 
 {{-- <script src="{{ asset('js/charts-pie.js')  }}" ></script> --}}
 <script src="{{ asset('js/init-alpine.js')  }}"></script>

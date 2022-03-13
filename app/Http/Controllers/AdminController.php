@@ -89,17 +89,17 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-     
+        // dd($id);
         $authuser = Auth::user()->id;
         if ("$authuser" !== $id) {
             // Authorization access
             Gate::authorize('edit-settings');
         }
-        if ($authuser == $id) {
-            $user = User::where('id', $id)->get();
-            //display each admin profile
-            return view('backend.adminProfile', compact('user'));
-        }
+        
+        $user = User::where('id', $id)->get();
+        //display each admin profile
+        return view('backend.adminProfile', compact('user'));
+    
         
     
     }
@@ -124,8 +124,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-   
-        if($request->image !== ''){
+        if($request->image !== null){
             $request->validate([
                 'image' => 'required|image|mimes:jpg,png,gif,jpeg',
             ]);
@@ -143,8 +142,9 @@ class AdminController extends Controller
                 'last_name' => 'required|string',
                 'email' =>  'required|string|email',
                 'password' =>  'required|string',
-                'role' => 'required|max:40'
+                'role' => 'required'
             ]);
+
             // save data
             $updated = User::where('id', $id)->update([
                 'first_name' =>  $request->first_name,
@@ -156,7 +156,7 @@ class AdminController extends Controller
         }
 
         if ($updated) 
-            return back()->with('status', 'Admin account updated');
+            return back()->with('status', 'Success! Admin account updated');
         else  
             return back()->with('error', 'Failed to Update Admin account');
     }
@@ -167,14 +167,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-           // DELETE RECORD
-           $deleted = User::where('id', $id)->delete();
-           if($deleted)
-               return back()->with('status', 'Success! Account deleted');
-           else
-               return back()->with('error', 'Failed to delete account');
-       
+        // DELETE RECORD
+        $deleted = User::where('id', $request->id)->delete();
+        if($deleted)
+            return back()->with('status', 'Success! Account deleted');
+        else
+            return back()->with('error', 'Failed to delete account');
+    
     }
 }

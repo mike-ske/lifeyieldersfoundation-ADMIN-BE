@@ -33,7 +33,7 @@ class InterviewApplicationController extends Controller
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $approveuser = DB::table('lyf_application')->paginate(2);
+                $approveuser = DB::table('lyf_application')->paginate(50);
                 return view('pages.interview', compact('approveuser'));
             } 
         }else return "<script>alert('No APPROVED Students Application')</script>" . back();
@@ -138,8 +138,13 @@ class InterviewApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $award = Interview::where('user_id', $request->id)->delete();
+        if($award > 0  )
+            return back()->with('status', 'Success! Student Interviews deleted');
+        else
+            return back()->with('error', 'Failed to delete interviews');
+        
     }
 }

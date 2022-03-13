@@ -36,7 +36,7 @@ Route::resource('email', MailAdminController::class);
 Route::resource('grants', GrantApplicationController::class);
 Route::resource('interview', InterviewApplicationController::class);
 Route::resource('award', AwardApplicationController::class);
-Route::get('approval', [ApprovedApplicationController::class, 'index']);
+Route::resource('approval', ApprovedApplicationController::class);
 
 Auth::routes(['verify' => true, 'register' => true]);
 

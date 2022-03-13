@@ -37,7 +37,7 @@ class GrantApplicationController extends Controller
         $approve = DB::table('lyf_approval')->where('status_id', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $approveuser = DB::table('lyf_application')->paginate(2);
+                $approveuser = DB::table('lyf_application')->paginate(50);
                 return view('pages.grants', compact('approveuser'));
             }
         } else return "<script>alert('No APPROVAL given to Students Application')</script>" . back();
@@ -81,7 +81,7 @@ class GrantApplicationController extends Controller
         $approve = Bank::where('approve_status', 2)->get();
         if ($approve->count() > 0) {
             foreach ($approve as $approved) {
-                $bank = DB::table('lyf_bank')->where('user_id', $approved->user_id)->get();
+                $bank = DB::table('lyf_bank')->where('user_id', $id)->get();
                
                 if ($bank->count() > 0 ) 
                     return view('backend.grantApp', compact('bank'));
@@ -124,7 +124,7 @@ class GrantApplicationController extends Controller
                     'confirm' => 'required',
                     'aggree' => 'required',
                 ]);
-              dd($request->id);
+            
                 $grants = Grant::where('lyf_account_id', $id)->update([
                     'amount' => $request->amount,
                     'admin_name' => $request->adminname,
@@ -132,7 +132,7 @@ class GrantApplicationController extends Controller
                     'grant_status' => 1,
                     'role_id' => Auth::user()->role_id
                 ]);
-                
+                //   dd($grants);
                 if ($grants == 1) 
                    return back()->with('status', 'Successfull! Student GRANTED');
                 else
@@ -150,8 +150,17 @@ class GrantApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        // dd($id);
+        $award = Grant::where('lyf_account_id', $request->id)->update([
+                    'grant_status' => 0
+                ]);
+              
+        if($award > 0  )
+            return back()->with('status', 'Success! Grants deleted');
+        else
+            return back()->with('error', 'Failed to delete grants');
+        
     }
 }

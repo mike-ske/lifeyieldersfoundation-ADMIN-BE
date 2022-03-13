@@ -36,7 +36,7 @@ class ApplicationController extends Controller
       
         foreach ($approve as $app) {
             // dd($app);
-            $application = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate();
+            $application = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate(50);
         }
         if (!isset($application))
             return "<script>alert('No new student application')</script>" . back();
@@ -83,10 +83,6 @@ class ApplicationController extends Controller
         
     }
 
-    public function getPdf($pdfstring)
-    {
-        return base64_decode($pdfstring);
-    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -180,13 +176,15 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         // DELETE RECORD
-        $deleted = DB::table('lyf_application')->where('id', $id)->delete();
-        $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
-        $granttb = Grant::where('lyf_account_id', $id)->delete();
-        if($deleted !== '' ||  $granttb !== '' || $approvaltb !== '')
+        $deleted = DB::table('lyf_application')->where('user_id', $request->id)->delete();
+        $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->delete();
+        $banktb = DB::table('lyf_bank')->where('user_id', $request->id)->delete();
+        $granttb = Grant::where('lyf_account_id', $request->id)->delete();
+        
+        if($deleted == 1 ||  $granttb == 1 || $approvaltb == 1 || $banktb == 1)
             return back()->with('status', 'Application deleted');
         else
             return back()->with('error', 'Failed to delete application');

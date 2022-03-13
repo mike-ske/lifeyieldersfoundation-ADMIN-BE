@@ -32,4 +32,19 @@ class ApprovedApplicationController extends Controller
             return view('pages.approved', ['approved' => $approved]);
         }
     }
+
+    public function destroy(Request $request)
+    {   
+        // dd($id);
+        // DELETE RECORD
+        $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->update([
+            'status_id' => 0
+        ]);
+        
+        if($approvaltb > 0 )
+            return back()->with('status', 'Success! Approval deleted');
+        else
+            return back()->with('error', 'Failed to delete approval');
+        
+    }
 }

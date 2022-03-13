@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Error;
 use App\Models\Award;
+use App\Models\Grant;
 use App\Models\Score;
+// use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -141,6 +144,9 @@ class AwardApplicationController extends Controller
                     'award_type' => $request->awardtype,
                     'award_status' => 1,
                 ]);
+                Grant::where('lyf_account_id', $id)->update([
+                    'award_id' => 1
+                ]);
                if ($award > 0) 
                    return back()->with('status', 'Successfull! Student AWARDED');
                 else
@@ -168,11 +174,14 @@ class AwardApplicationController extends Controller
                     return back()->with('status', 'Success! Award Certificate Added');
                 break;
             case 'certificate':
-
-                dd($request);
-
-                // if($data !== '' || $mail !== '')
-                //     return back()->with('status', 'Success! Award Certificate Added');
+                // dd($request);
+                $award = PDF::loadView('pages.certificate', ['request' => $request])
+                                ->setPaper('a4', 'landscape')
+                                ->setOptions(['defaultFont' => 'sans-serif'])
+                                ->setWarnings(false);
+                return $award->download('certificate.pdf');
+                 back()->with('status', 'Success! Award Certificate Added');
+              
                 break;
 
             default:
@@ -186,17 +195,17 @@ class AwardApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {   
         // DELETE RECORD
-        $approvaltb = DB::table('lyf_approval')->where('user_id', $id)->delete();
-        $apptb = DB::table('lyf_application')->where('user_id', $id)->delete();
-        $granttb = Award::where('user_id', $id)->delete();
-        $bank = DB::table('lyf_bank')->where('user_id', $id)->delete();
-        if($approvaltb > 0 &&  $granttb > 0  && $bank > 0   && $bank > 0  && $apptb > 0 )
-            return back()->with('status', 'Success! Student deleted');
+      
+        $award = Grant::where('lyf_account_id', $request->id)->update([
+            'award_id' => 0
+        ]);
+        if($award > 0  )
+            return back()->with('status', 'Success! Award deleted');
         else
-            return back()->with('error', 'Failed to delete application');
+            return back()->with('error', 'Failed to delete awards');
         
     }
 }
