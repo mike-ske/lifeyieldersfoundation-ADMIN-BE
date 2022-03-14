@@ -126,8 +126,11 @@ class ApplicationController extends Controller
 
                 $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 1]);
                 
-                if($data !== '')
+                if($data == 1)
                     return back()->with('status', 'Application pending');
+                else  
+                    return back()->with('error', 'Failed! Application Not Pending');
+
                 break;
             case 'decline':
                 $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 0]);
@@ -180,11 +183,11 @@ class ApplicationController extends Controller
     {
         // DELETE RECORD
         $deleted = DB::table('lyf_application')->where('user_id', $request->id)->delete();
-        $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->delete();
+        // $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->delete();
         $banktb = DB::table('lyf_bank')->where('user_id', $request->id)->delete();
         $granttb = Grant::where('lyf_account_id', $request->id)->delete();
         
-        if($deleted == 1 ||  $granttb == 1 || $approvaltb == 1 || $banktb == 1)
+        if($deleted == 1 ||  $granttb == 1 || $banktb == 1)
             return back()->with('status', 'Application deleted');
         else
             return back()->with('error', 'Failed to delete application');

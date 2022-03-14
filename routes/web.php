@@ -49,4 +49,10 @@ Route::group(['prefix' => 'sendmail'], function () {
     Route::post('/', [SendMailController::class, 'create'])->name('compose');
 });
 
+// MAILS AND ALERT NOTIFICATIONS
+Route::post('/mail', [SendMailController::class, 'sendMailToStudent'])->name('mail');
+Route::get('/getmail', [SendMailController::class, 'getmail'])->name('mails');
+Route::get('/getapplication', [SendMailController::class, 'getapplication']);
+Route::get('/clearnotice', [SendMailController::class, 'clearnotice']);
+
 Route::post('/inbox', [MailboxController::class, 'sendMail'])->name('inbox');

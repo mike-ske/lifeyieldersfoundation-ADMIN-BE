@@ -113,7 +113,7 @@ class MailAdminController extends Controller
     public function destroy(Request $request)
     {
         $mail = AdminEmail::where('id', $request->id)->delete();
-        if($mail > 0  )
+        if($mail > 0)
             return back()->with('status', 'Success! Mail deleted');
         else
             return back()->with('error', 'Failed to delete mail');

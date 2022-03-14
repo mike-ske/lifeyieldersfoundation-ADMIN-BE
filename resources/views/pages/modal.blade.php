@@ -17,7 +17,7 @@
         <header class="flex justify-between">
             <div class="flex items-center justify-center">
                 <h1
-                    class="text-white dark:text-gray-700 font-bold text-3xl transition-colors duration-150 dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent active:text-gray-500 ">
+                    class="text-white font-bold text-3xl transition-colors duration-150 dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent active:text-gray-500 ">
                     Compose Mail
                 </h1>
             </div>
@@ -33,31 +33,31 @@
         </header>
         <!-- Modal body -->
         <div class="mt-4 mb-6">
-            <form action="{{ route('compose') }}" method="POST" id="mailForm" enctype="multipart/form-data"
+            <form action="{{ route('mail') }}" method="POST" id="mailStudent" enctype="multipart/form-data"
                 class="mt-10">
                 @csrf
 
-                <label id="admin" class="hidden text-sm mb-4">
+                {{-- <label id="admin" class="hidden text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">To Admin</span>
 
                     <input type="text" name="toAdmin" id="admin"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="To: admin@gmail.com">
                     <span id="msg1" class="text-red-500 text-xs mt-4"></span>
-                </label>
+                </label> --}}
                 <label id="student" class="hidden text-sm mt-4">
                     <span class="text-gray-700 dark:text-gray-400">To Student</span>
 
                     <input type="text" name="toStudent" id="student"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="To: student@gmail.com">
-                    <span id="msg2" class="text-red-500 text-xs mt-4"></span>
+                    <span id="msg1" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <div class="flex mt-4 items-end justify-end gap-4">
-                    <div id="addAdmin"
+                    {{-- <div id="addAdmin"
                         class="cursor-pointer w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                         Add Admin
-                    </div>
+                    </div> --}}
                     <div id="addStudent"
                         class="cursor-pointer w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                         Add Student
@@ -68,21 +68,21 @@
                     <input type="text" name="subject" id="subject"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="Enter subject">
-                    <span id="msg3" class="text-red-500 text-xs mt-4"></span>
+                    <span id="msg2" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <label class="block text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">From</span>
                     <input type="text" name="from" id="from" disabled
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="Lifeyieldersfoundation team">
-                    <span id="msg4" class="text-red-500 text-xs mt-4"></span>
+                    <span id="msg3" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <label class="block text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">Leave a message</span>
                     <textarea style="height: 300px" name="message" id="message"
                         class="block resize-none w-full h-2/3 rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                         rows="3" placeholder="You have been invited for an interview by....."></textarea>
-                    <span id="msg5" class="text-red-500 text-xs mt-4"></span>
+                    <span id="msg4" class="text-red-500 text-xs mt-4"></span>
                 </label>
                 <div class="flex mt-10 text-sm items-right justify-end">
                     <footer

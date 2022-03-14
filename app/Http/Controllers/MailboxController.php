@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Validator;
 class MailboxController extends Controller
 {
     public function sendMail(Request $request)
-    {          // validate
-       
+    {         
+        // TO RETURN A GET JSON RESPONSE OVERWRITE THE RESPONSE 
+        // BY USING Validator instance -> Validator::make()
         $validate = Validator::make($request->all(), [
             'tomailer' => 'required|email',
             'subject' => 'required|string|max:500',
