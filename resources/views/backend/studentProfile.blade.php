@@ -12,7 +12,7 @@
                     </h2>
                     <div class="w-full sm:flex h-full">
 
-                        <div class="w-2/6 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
+                        <div class="sm:w-2/6 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
                             @if ($studentValue->image === '')
                                 <div class="relative w-full mr-3 rounded-full md:block">
                                     <img class="object-cover mb-8 mx-auto w-full h-full rounded-full"

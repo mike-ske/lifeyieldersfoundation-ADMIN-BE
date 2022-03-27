@@ -134,9 +134,10 @@ class StudentController extends Controller
         // DELETE RECORD
         $deleted = DB::table('lyf_account')->where('id', $request->id)->delete();
         $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->delete();
+        $applytb = DB::table('lyf_application')->where('user_id', $request->id)->delete();
         $granttb = Grant::where('lyf_account_id', $request->id)->delete();
         $bank = DB::table('lyf_bank')->where('user_id', $request->id)->delete();
-        if($deleted > 0 || $granttb > 0 || $approvaltb > 0 || $bank > 0)
+        if($deleted > 0 || $granttb > 0 || $approvaltb > 0 || $bank > 0 || $applytb > 0)
             return back()->with('status', 'Success! Student deleted');
         else
             return back()->with('error', 'Failed to delete application');

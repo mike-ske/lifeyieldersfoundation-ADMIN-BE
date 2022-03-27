@@ -33,19 +33,11 @@
         </header>
         <!-- Modal body -->
         <div class="mt-4 mb-6">
-            <form action="{{ route('mail') }}" method="POST" id="mailStudent" enctype="multipart/form-data"
+            <form action="mail" id="mailStudent" enctype="multipart/form-data"
                 class="mt-10">
                 @csrf
 
-                {{-- <label id="admin" class="hidden text-sm mb-4">
-                    <span class="text-gray-700 dark:text-gray-400">To Admin</span>
-
-                    <input type="text" name="toAdmin" id="admin"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        placeholder="To: admin@gmail.com">
-                    <span id="msg1" class="text-red-500 text-xs mt-4"></span>
-                </label> --}}
-                <label id="student" class="hidden text-sm mt-4">
+                <label id="student" class="block text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">To Student</span>
 
                     <input type="text" name="toStudent" id="student"
@@ -53,16 +45,7 @@
                         placeholder="To: student@gmail.com">
                     <span id="msg1" class="text-red-500 text-xs mt-4"></span>
                 </label>
-                <div class="flex mt-4 items-end justify-end gap-4">
-                    {{-- <div id="addAdmin"
-                        class="cursor-pointer w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-                        Add Admin
-                    </div> --}}
-                    <div id="addStudent"
-                        class="cursor-pointer w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-                        Add Student
-                    </div>
-                </div>
+              
                 <label class="block text-sm mb-4">
                     <span class="text-gray-700 dark:text-gray-400">Subject</span>
                     <input type="text" name="subject" id="subject"

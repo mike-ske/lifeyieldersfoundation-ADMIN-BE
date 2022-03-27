@@ -13,7 +13,7 @@
                     <div class="w-full mb-10 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
                         <div class="relative w-full mr-3 rounded-full md:block">
                             {{-- side icons actions for mail --}}
-                            <a @click="openModal"
+                            <a href="{{ URL('email/create') }}"
                                 class="cursor-pointer flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 Compose
                                 <span class="ml-2" aria-hidden="true">
@@ -142,7 +142,7 @@
                             <div class="w-full overflow-x-auto grid px-4 py-3 ">
                                 {{-- Read messages --}}
                                 <div class="flex items-center text-sm mb-10">
-                                    <a @click="openModal"
+                                    <a href="{{ URL('email/create') }}"
                                         class="cursor-pointer flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Edit">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"

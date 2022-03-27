@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 use App\Models\SendMail;
 use App\Models\AdminEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class MailAdminController extends Controller
 {
@@ -35,7 +37,7 @@ class MailAdminController extends Controller
         // Authorization access
         Gate::authorize('edit-settings');
         
-        $mail = AdminEmail::paginate(50);
+        $mail = AdminEmail::orderBy('created_at', 'DESC')->paginate(50);
         // $genEmail = Sendmail::paginate(50);          
         return view('pages.mails', compact('mail'));
         
@@ -52,6 +54,7 @@ class MailAdminController extends Controller
     public function create()
     {
         //
+        return view('backend.sendMail');
     }
 
     /**
@@ -63,6 +66,35 @@ class MailAdminController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = Validator::make($request->all(), [
+            'toStudent' => 'required|email',
+            'subject' => 'required|string|max:500',
+            'message' => 'required|string'
+        ]);
+        // send mail
+        if ($validate->fails()) {
+            return response()->json(['message' => $validate->errors()]);
+        }
+
+        // dd($validate);
+        $student_id = DB::table('lyf_account')->where('email', $request->toStudent)->value('id');
+        if ($student_id > 0){
+
+            $sent = DB::table('lyf_email')->insert([
+                'user_id' => $student_id,
+                'role_id' => Auth::user()->role_id,
+                'mail_subject' => $request->subject,
+                'mail_body' => $request->message
+            ]);
+            if ($sent == 1) 
+                return response()->json(['success' => 'SUCCESS! MAIL SENT']);
+            else
+                return response()->json(['failed' => 'FAILED! MAIL NOT SENT']);  
+        }
+        else {
+            return response()->json(['failed' => 'User does not exist']);
+        }
+     
     }
 
     /**
@@ -77,7 +109,9 @@ class MailAdminController extends Controller
         Gate::authorize('edit-settings');
         // GET each mail ADMIN
         $emails = AdminEmail::where('id', $id)->get();
-        // $adminMails = SendMail::where('id', $id)->get();
+        AdminEmail::where('status_id', 1)->where('id', $id)->update([
+            'status_id' => 0
+        ]);
         return view('backend.mailAdmin', compact('emails'));
     }
 

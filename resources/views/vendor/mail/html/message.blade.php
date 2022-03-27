@@ -22,7 +22,9 @@
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+            {{ 'Company Inc, 1100 Louisana St, Houston, TX 77002, USA' }} <br>
+            © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.') <br><br>
+            {{ 'Supported & Powered by' }} . <a href="http://lifeyieldersfoundation.org" style="text-decoration: underline">Lifeyielders Foundation</a><br>
         @endcomponent
     @endslot
 @endcomponent

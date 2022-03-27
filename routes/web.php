@@ -14,6 +14,7 @@ use App\Http\Controllers\ApprovedApplicationController;
 use App\Http\Controllers\InterviewApplicationController;
 use App\Http\Controllers\MailboxController;
 use App\Http\Controllers\SendMailController;
+use App\Http\Controllers\StudentMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,13 +45,6 @@ Route::get('/certificate', function () {
     return view('pages.certificate');
 });
 
-
-Route::group(['prefix' => 'sendmail'], function () {
-    Route::post('/', [SendMailController::class, 'create'])->name('compose');
-});
-
-// MAILS AND ALERT NOTIFICATIONS
-Route::post('/mail', [SendMailController::class, 'sendMailToStudent'])->name('mail');
 Route::get('/getmail', [SendMailController::class, 'getmail'])->name('mails');
 Route::get('/getapplication', [SendMailController::class, 'getapplication']);
 Route::get('/clearnotice', [SendMailController::class, 'clearnotice']);

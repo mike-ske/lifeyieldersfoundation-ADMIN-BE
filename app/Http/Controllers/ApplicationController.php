@@ -78,7 +78,9 @@ class ApplicationController extends Controller
         
         $student = DB::table('lyf_application')->where('user_id', $id)->get();
         $bank = DB::table('lyf_bank')->where('user_id', $id)->get();
-     
+        DB::table('lyf_application')->where('notif', 0)->where('user_id', $id)->update([
+            'notif' => 1
+        ]);
         return view('backend.studentApp', compact('student', 'bank'));
         
     }

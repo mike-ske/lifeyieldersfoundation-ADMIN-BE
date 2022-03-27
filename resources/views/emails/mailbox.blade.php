@@ -14,7 +14,6 @@
 
 </div>
 
-
 # {{ $mailing->subject }}
 
 Hi,

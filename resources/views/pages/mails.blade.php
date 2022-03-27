@@ -56,7 +56,7 @@
                     <div class="w-full mb-10 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
                         <div class="relative w-full mr-3 rounded-full md:block">
                             {{-- side icons actions for mail --}}
-                            <a @click="openModal"
+                            <a href="{{ URL('email/create') }}"
                                 class="cursor-pointer flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 Compose
                                 <span class="ml-2" aria-hidden="true">
@@ -203,7 +203,7 @@
                                             <td class="px-4 py-3 overflow-hidden">
                                                 <a href="email/{{ $mails->id }}"
                                                     class="flex items-center justify-between w-full px-4 py-2 text-sm leading-5 transition-colors duration-150  rounded-lg  focus:outline-none">
-                                                    {{ $mails->mail_body }}
+                                                    {{ Illuminate\Support\Str::of($mails->mail_subject)->limit(50) }}
                                                 </a>
                                             </td>
                                             <td class="px-4 py-3 text-sm">
@@ -232,7 +232,7 @@
                         </div>
                    
                     @endif
-
+                    
                     {{-- FOR GENERAL ADMINS TO VIEW MAILS --}}
                     {{-- @if ($genEmail->count() > 0)
                         <div class="w-full overflow-x-auto">
