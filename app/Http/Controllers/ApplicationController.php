@@ -32,14 +32,14 @@ class ApplicationController extends Controller
     public function index()
     {
         
-        $approve = DB::table('lyf_approval')->where('status_id', 0)->orderBy('created_at')->get();
+        $approve = DB::table('devices')->orderBy('created_at')->get();
       
         foreach ($approve as $app) {
             // dd($app);
-            $application = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate(50);
+            $application = DB::table('devices')->orderBy('id', 'DESC')->paginate(20);
         }
         if (!isset($application))
-            return "<script>alert('No new student application')</script>" . back();
+            return "<script>alert('No new device registered')</script>" . back();
         else
             return view('pages.application', compact('application'));
         
@@ -76,12 +76,11 @@ class ApplicationController extends Controller
     public function show($id)
     {
         
-        $student = DB::table('lyf_application')->where('user_id', $id)->get();
-        $bank = DB::table('lyf_bank')->where('user_id', $id)->get();
-        DB::table('lyf_application')->where('notif', 0)->where('user_id', $id)->update([
-            'notif' => 1
-        ]);
-        return view('backend.studentApp', compact('student', 'bank'));
+        $student = DB::table('devices')->where('id', $id)->get();
+        // DB::table('students')->where('notif', 0)->where('user_id', $id)->update([
+        //     'notif' => 1
+        // ]);
+        return view('backend.deviceApp', compact('student'));
         
     }
 
@@ -125,19 +124,19 @@ class ApplicationController extends Controller
 
                 break;
             case 'pend':
-
-                $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 1]);
+                
+                $data = DB::table('devices')->where('id', $request->userId)->update(['workdone' => 'Fixed']);
                 
                 if($data == 1)
-                    return back()->with('status', 'Application pending');
+                    return back()->with('status', 'Device Fixed');
                 else  
-                    return back()->with('error', 'Failed! Application Not Pending');
+                    return back()->with('error', 'Failed! Device Not Fixed');
 
                 break;
-            case 'decline':
-                $data = DB::table('lyf_approval')->where('application_id', $request->pendinguser)->update(['status_id' => 0]);
-                if($data !== '')
-                    return back()->with('error', 'Application decline');
+            case 'print':
+                $data = DB::table('devices')->where('id', $id)->get();
+                if($data->count() > 0)
+                    return view('pages.printcard', compact('data') );
 
                 break;
             case 'score':

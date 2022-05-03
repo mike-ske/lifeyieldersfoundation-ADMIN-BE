@@ -19,8 +19,8 @@
                     
                     <div class="w-full">
                         <div class="w-full flex items-center justify-center m-0 p-6 sm:pl-12 sm:pr-12">
-                            <img aria-hidden="true" class="hidden object-cover  m-0 w-full h-full dark:block"
-                                src="{{ asset('image/logo-compact2.png') }}" alt="Office" />
+                            <img aria-hidden="true" class="hidden object-cover m-0 w-full h-full dark:block"
+                                src="{{ asset('image/logo-compact2.jpg') }}" style="width: 150px" alt="Office" />
                         </div>
                         <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                             Login
@@ -29,8 +29,8 @@
                             <label class="block text-sm w-full">
                                 <span class="text-gray-700 dark:text-gray-400">Email</span>
                                 <input id="email" type="email"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none 
-                                        focus:shadow-outline-purple rounded-md dark:text-gray-300 
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-green-400 focus:outline-none 
+                                        focus:shadow-outline-green rounded-md dark:text-gray-300 
                                         dark:focus:shadow-outline-gray form-input @error('email') border-red-500 @enderror"
                                     name="email" value="{{ old('email') }}" autocomplete="email" autofocus
                                     placeholder="john@gmail.com" />
@@ -45,7 +45,7 @@
                             <label id="password" type="password" required class="block mt-4 text-sm  w-full">
                                 <span class="text-gray-700 dark:text-gray-400">Password</span>
                                 <input name="password"
-                                    class="form-input rounded-md @error('password') border-red-500 @enderror block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    class="form-input rounded-md @error('password') border-red-500 @enderror block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-green-400 focus:outline-none focus:shadow-outline-green dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     placeholder="***************" type="password" />
                             </label>
                             @error('password')
@@ -56,7 +56,7 @@
                         </div>
                         <!-- You should use a button here, as the anchor is only used for the example  -->
                         <button type="submit"
-                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-green">
                             {{ __('Login') }}
                         </button>
                         <div class="grid mt-4 items-center">
@@ -75,8 +75,10 @@
                         </div>
 
                         <div class="w-full flex items-center justify-center mt-10">
-                            <span class="text-gray-700 text-xs dark:text-gray-400 text-center">Copyright © All right reserved. Supported & Powered by 
-                                <a class="text-purple-600 dark:text-purple-400 text-center underline" target="_blank" href="http://www.lifeyieldersfoundation.org">lifeyieldersfoundation</a> 
+                            
+                            <span class="text-gray-700 text-xs dark:text-gray-400 text-center">Copyright © All right reserved. Powered by 
+                                <a class="text-green-600 dark:text-green-400 text-center underline" target="_blank" href="http://www.faan.gov.ng">FAAN ICT.</a> <br><br>
+                                  Developed and Design with love by <a class="text-green-600 dark:text-green-400 text-center underline" target="_blank" href="http://mivex.herokuapp.com">Micah Alumona</a> 
                             </span>
                         </div>
                     </div>

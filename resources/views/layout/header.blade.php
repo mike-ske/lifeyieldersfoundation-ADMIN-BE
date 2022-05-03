@@ -8,16 +8,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>LYF | Admin</title>
+    <title>FAAN ICT | Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     {{-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.4/dist/flowbite.min.css" /> --}}
     <!-- Favicon icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('image/favicon_io/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon_io/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon_io/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('image/favicon_io/site.webmanifest') }}">
+
 
     {{-- FONTS SECTION --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,30 +28,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=New+Rocker&family=Newsreader:ital,wght@0,200;0,300;0,400;0,500;0,600;1,600&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sacramento&display=swap" rel="stylesheet">
 
-      {{-- text editors --}}
-      {{-- <script src="https://cdn.tiny.cloud/1/l6erwzidpta0cyte3onhnmv5jz2h2di9fp5469z23afc192z/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
-    <script type="text/javascript">
-        tinymce.init({
-            selector: 'textarea',
-            // plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-            // toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
-            // toolbar_mode: 'floating',
-            // tinycomments_mode: 'embedded',
-            // tinycomments_author: 'Lifeyieldersfoundation',
-        });
-    </script>
-
-    <script>
-        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
     <style type="text/css">
   
         .m0 {

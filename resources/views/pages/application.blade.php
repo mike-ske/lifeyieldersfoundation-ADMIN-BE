@@ -5,18 +5,18 @@
     <main class="h-full overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Application
+                Device Application
             </h2>
             <!-- CTA -->
             <a
-                class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple">
+                class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-green-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-green">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
                         </path>
                     </svg>
-                    <span>Here you can view all new and updated applications.</span>
+                    <span>Here you can view all new and updated Devices.</span>
                 </div>
             </a>
             @if (session()->has('status'))
@@ -52,7 +52,7 @@
             @endif
             <!-- New Table -->
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                Candidates Application
+                Registered Device
             </h4>
             <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
                 <div class="w-full overflow-x-auto">
@@ -60,9 +60,10 @@
                         <thead>
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">Student</th>
-                                <th class="px-4 py-3">Country</th>
-                                <th class="px-4 py-3">Email</th>
+                                <th class="px-4 py-3">Officer</th>
+                                <th class="px-4 py-3">Model</th>
+                                <th class="px-4 py-3">Department</th>
+                                <th class="px-4 py-3">Fixer</th>
                                 <th class="px-4 py-3">Status</th>
                                 <th class="px-4 py-3">Date</th>
                                 <th class="px-4 py-3">Actions</th>
@@ -77,61 +78,69 @@
                                                 <!-- Avatar with inset shadow -->
                                                 <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
                                                     <img class="object-cover w-full h-full rounded-full"
-                                                        src="https://ui-avatars.com/api/?name={{ $appValue->fname }}+{{ $appValue->lname }}"
+                                                        src="https://ui-avatars.com/api/?name=F+T"
                                                         alt="" loading="lazy">
                                                     <div class="absolute inset-0 rounded-full shadow-inner"
                                                         aria-hidden="true">
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <p class="font-semibold">{{ $appValue->fname }}
-                                                        {{ $appValue->lname }}</p>
+                                                    <p class="font-semibold">{{ Str::upper($appValue->requesting_officer) }}</p>
                                                     <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                        Student
+                                                        Officer
                                                     </p>
                                                 </div>
                                             </div>
                                         </td>
 
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $appValue->country }}
-
+                                            {{ Str::upper($appValue->machine_model) }}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $appValue->email }}
+                                            {{ Str::upper($appValue->department) }}
+                                        </td>
+                                        <td class="font-bold px-4 py-3 text-sm">
+                                            {{ Str::upper($appValue->workdone_by)}}
                                         </td>
                                         <td class="px-4 py-3 text-xs">
-                                            @php
-                                                $aprove_id = DB::table('lyf_approval')
-                                                    ->select('status_id')
-                                                    ->where('application_id', $appValue->id)
-                                                    ->value('status_id');
-                                            @endphp
-                                            @if ($aprove_id == 0)
-                                                <span
-                                                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                                    Awaiting
-                                                </span>
-                                            @endif
-                                            @if ($aprove_id == 1)
-                                                <span
-                                                    class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-red-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
-                                                    Pending
-                                                </span>
-                                            @endif
-                                            @if ($aprove_id == 2)
-                                                <span
-                                                    class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-red-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
-                                                    Approved
-                                                </span>
-                                            @endif
+                                                @if ($appValue->workdone  === 'Not yet fixed' || $appValue->workdone  === 'not yet fixed')
+                                                    <span
+                                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                                        Awaiting
+                                                    </span>
+                                                @endif
+                                                @if ($appValue->workdone   === 'Pending')
+                                                    <span
+                                                        class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-red-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
+                                                        Pending
+                                                    </span>
+                                                    
+                                                @endif
+                                                @if ($appValue->workdone  === 'Fixed' || $appValue->workdone   === 'fixed')
+                                                    <span
+                                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                        Fixed
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                                        Failed to fix
+                                                    </span>   
+                                                @endif
+                                                {{-- @if ($appValue->workdone   === 'fixed')
+                                                    <span
+                                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                        Fixed
+                                                    </span>
+                                               
+                                                @endif --}}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
                                             {{ Carbon\Carbon::parse($appValue->created_at)->diffForHumans() }}
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
-                                                <a href="application/{{ $appValue->user_id }}"
+                                                <a href="application/{{ $appValue->id }}"
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Edit">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -150,7 +159,7 @@
                                                     
                                                 @endphp
                                                 @if ($role === 'superadmin')
-                                                    <button id="appbtn" type="button" value="{{ $appValue->user_id }}" data-modal-toggle="delete-modal" onclick="return appDelete(this)"
+                                                    <button id="appbtn" type="button" value="{{ $appValue->id }}" data-modal-toggle="delete-modal" onclick="return appDelete(this)"
                                                         class="cursor-pointer flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                         aria-label="Delete">
                                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -168,7 +177,7 @@
                             @else
                                 <h1
                                     class="text-xl  p-2 mt-10 font-semibold text-center text-gray-500 uppercase dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
-                                    There are no application</h1>
+                                    There are no registered device</h1>
                             @endif
 
                         </tbody>

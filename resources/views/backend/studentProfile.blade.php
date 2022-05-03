@@ -8,16 +8,17 @@
             @foreach ($student as $studentValue)
                 <div class="container px-6 mx-auto grid">
                     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                        Welcome to {{ $studentValue->fname }} {{ $studentValue->lname }} Profile
+                        Welcome to {{ Str::ucfirst($studentValue->surname)  }} {{ Str::ucfirst($studentValue->first_name) }} Profile
                     </h2>
+                    
                     <div class="w-full sm:flex h-full">
 
                         <div class="sm:w-2/6 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mr-10" style="height: 222px">
-                            @if ($studentValue->image === '')
+                            @if ($studentValue->image === '' || $studentValue->image == null)
                                 <div class="relative w-full mr-3 rounded-full md:block">
                                     <img class="object-cover mb-8 mx-auto w-full h-full rounded-full"
                                         style="height: 100px;width:100px"
-                                        src="https://ui-avatars.com/api/?name={{ $studentValue->fname }}+{{ $studentValue->lname }}"
+                                        src="https://ui-avatars.com/api/?name={{ $studentValue->surname }}+{{ $studentValue->first_name }}"
                                         alt="" loading="lazy">
                                     <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
                                     </div>
@@ -31,10 +32,10 @@
                                 </div>
                             @endif
                             <p class="font-semibold text-center text-gray-600 dark:text-gray-400">
-                                {{ $studentValue->fname }} {{ $studentValue->lname }}
+                                {{ Str::ucfirst($studentValue->surname) }} {{ Str::ucfirst($studentValue->first_name) }}
                             </p>
                             <p class="text-xs text-gray-600 dark:text-gray-400 text-center">
-                                {{ $studentValue->email }}
+                                {{ $studentValue->email_address }}
                             </p>
 
                         </div>
@@ -82,24 +83,13 @@
                                 </h2>
                             </div>
 
-                            <form action="/student/{{ $studentValue->id }}" method="post">
+                            <form action="/students/{{ $studentValue->id }}" method="post">
                                 @csrf
                                 @method('PATCH')
 
                                 <label class="block text-sm mb-4">
-                                    <span class="text-gray-700 dark:text-gray-400">About</span>
-                                    <textarea style="height: 150px" name="about"
-                                        class="block resize-none w-full rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                        rows="3" placeholder="I am a good person.">{{ $studentValue->about }}</textarea>
-                                    @error('about')
-                                        <span class="text-red-500 text-xs mt-4">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-                                </label>
-                                <label class="block text-sm mb-4">
                                     <span class="text-gray-700 dark:text-gray-400">First name</span>
-                                    <input type="text" value="{{ $studentValue->fname }}" name="first_name"
+                                    <input type="text" value="{{ Str::ucfirst($studentValue->surname) }}" name="first_name"
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         placeholder="John Paul">
                                     @error('first_name')
@@ -110,7 +100,7 @@
                                 </label>
                                 <label class="block text-sm mb-4">
                                     <span class="text-gray-700 dark:text-gray-400">Last name</span>
-                                    <input type="text" value="{{ $studentValue->lname }}" name="last_name"
+                                    <input type="text" value="{{ Str::ucfirst($studentValue->first_name) }}" name="last_name"
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         placeholder="John Paul">
                                     @error('last_name')
@@ -121,7 +111,7 @@
                                 </label>
                                 <label class="block text-sm mb-4">
                                     <span class="text-gray-700 dark:text-gray-400">Email</span>
-                                    <input type="email" value="{{ $studentValue->email }} " name="email"
+                                    <input type="email" value="{{ $studentValue->email_address }} " name="email"
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         placeholder="john@gmail.com">
                                     @error('email')
@@ -131,11 +121,42 @@
                                     @enderror
                                 </label>
                                 <label class="block text-sm mb-4">
-                                    <span class="text-gray-700 dark:text-gray-400">Password</span>
-                                    <input type="password" name="password"
+                                    <span class="text-gray-700 dark:text-gray-400">Phone number</span>
+                                    <input type="tel" value="{{ $studentValue->phone_number }} " name="phone"
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        placeholder="*********">
-                                    @error('password')
+                                        placeholder="09023343445">
+                                    @error('phone')
+                                        <span class="text-red-500 text-xs mt-4">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </label>
+                                <label class="block text-sm mb-4">
+                                    <span class="text-gray-700 dark:text-gray-400">Address</span>
+                                    <input type="text" value="{{ $studentValue->residential_address }}" name="residential_address"
+                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                        placeholder="204, Ken Tower Gate, Block 22">
+                                    @error('residential_address')
+                                        <span class="text-red-500 text-xs mt-4">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </label>
+                                <label class="block text-sm mb-4">
+                                    <span class="text-gray-700 dark:text-gray-400">Start Programme - {{ Carbon\Carbon::parse($studentValue->start_duration)->diffForHumans() }}</span>
+                                    <input type="date" name="start_duration" value=""
+                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+                                    @error('start_duration')
+                                        <span class="text-red-500 text-xs mt-4">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </label>
+                                <label class="block text-sm mb-4">
+                                    <span class="text-gray-700 dark:text-gray-400">End Programme - {{ Carbon\Carbon::parse($studentValue->end_duration)->diffForHumans() }}</span>
+                                    <input type="date" name="end_duration" value=""
+                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+                                    @error('end_duration')
                                         <span class="text-red-500 text-xs mt-4">
                                             {{ $message }}
                                         </span>
@@ -150,7 +171,6 @@
                                             </button>
                                             <input type="reset" value="Clear"
                                                 class="px-3 py-1 text-sm font-medium cursor-pointer leading-5 text-white transition-colors duration-150 bg-yellow-600 border border-transparent rounded-md active:bg-yellow-600 hover:bg-orange-700 focus:outline-none focus:shadow-outline-purple">
-
                                         </div>
                                     </label>
                                 </div>

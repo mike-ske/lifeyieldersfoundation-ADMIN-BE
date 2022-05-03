@@ -2,27 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grant;
+use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
-     /**
-     * Create a new controller instance.
-     *  
-     * SET MIDDLEWARE FOR THIS ADMIN MAKE SURE THE USER 
-     * IS AUTHENTICATED BEFORE HE ACCESS THIS ROUTE
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -30,15 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-
-        $student = DB::table('lyf_account')->orderBy('id', 'DESC')->paginate(50);
-        if ($student) 
-            return view('pages.student', compact('student'));
-        else 
-            return "<script>alert('No student account')</script>" . back();
-            // return redirect()->route('pages.student');
-        
-        
+        return view('pages.regstudent');
     }
 
     /**
@@ -59,7 +35,45 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-       
+           // validate
+           $this->validate($request,[
+            'surname' => 'required|string',
+            'first_name' => 'required|string',
+            'gender' => 'required|string',
+            'email' => 'required|email',
+            'phone_number' => 'required',
+            'residential_address' => 'required|string',
+            'state_of_origin' => 'required',
+            'nationality' => 'required',
+            'school' => 'required|string',
+            'course_of_study' => 'required|string',
+            'programme' => 'required|string',
+            'start_duration' => 'required',
+            'end_duration' => 'required',
+        ]);
+        // store
+        $created = Student::create([
+            'surname' => $request->surname,
+            'first_name' => $request->first_name,
+            'gender' => $request->gender,
+            'email_address' => $request->email,
+            'phone_number' => $request->phone_number,
+            'residential_address' => $request->residential_address,
+            'state_of_origin' => $request->state_of_origin,
+            'nationality' => $request->nationality,
+            'school' => $request->school,
+            'course_of_study' => $request->course_of_study,
+            'programme' => $request->programme,
+            'start_duration' => $request->start_duration,
+            'end_duration' => $request->end_duration,
+        ]);
+
+        if( $created->count() > 0)
+            return back()->with('status', 'Student successfully registered');
+        else
+            return back()->with('error', 'Failed to register student');
+
+        
     }
 
     /**
@@ -70,12 +84,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        
-         // Authorization access
-         Gate::authorize('edit-settings');
-        $student = DB::table('lyf_account')->where('id', $id)->get();
-        //show each student
-        return view('backend.studentProfile', compact('student'));
+        //
     }
 
     /**
@@ -98,29 +107,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        // validate request 
-        $r = $request->validate([
-            'about' => 'required|string',
-            'first_name' => 'required|string|min:5',
-            'last_name' => 'required|string|min:5',
-            'email' => 'required|string|email',
-            'password' => 'required|string'
-        ]);
-       
-        // save data 
-        $updated = DB::table('lyf_account')->where('id', $id)->update([
-            'fname' =>  $request->first_name,
-            'lname' =>  $request->last_name,
-            'email' =>  $request->email,
-            'password' =>  Hash::make($request->password),
-            'about' =>  $request->about
-        ]);
-        
-        if ($updated > 0) 
-            return back()->with('status', 'Student account updated');
-        else  
-            return back()->with('error', 'Failed to Update student account');
+        //
     }
 
     /**
@@ -129,18 +116,8 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        // DELETE RECORD
-        $deleted = DB::table('lyf_account')->where('id', $request->id)->delete();
-        $approvaltb = DB::table('lyf_approval')->where('user_id', $request->id)->delete();
-        $applytb = DB::table('lyf_application')->where('user_id', $request->id)->delete();
-        $granttb = Grant::where('lyf_account_id', $request->id)->delete();
-        $bank = DB::table('lyf_bank')->where('user_id', $request->id)->delete();
-        if($deleted > 0 || $granttb > 0 || $approvaltb > 0 || $bank > 0 || $applytb > 0)
-            return back()->with('status', 'Success! Student deleted');
-        else
-            return back()->with('error', 'Failed to delete application');
+        //
     }
-
 }

@@ -65,8 +65,9 @@
                             </p>
                         </div>
                          <div class="w-full flex items-center justify-center mt-10">
-                            <span class="text-gray-700 text-xs dark:text-gray-400 text-center">Copyright © All right reserved. Supported & Powered by 
-                                <a class="text-purple-600 dark:text-purple-400 text-center underline" target="_blank" href="http://www.lifeyieldersfoundation.org">lifeyieldersfoundation</a> 
+                            <span class="text-gray-700 text-xs dark:text-gray-400 text-center">Copyright © All right reserved. Powered by 
+                                <a class="text-green-600 dark:text-green-400 text-center underline" target="_blank" href="http://www.faan.gov.org">FAAN ICT</a> <br><br>
+                                Developed and Design with love by <a class="text-green-600 dark:text-green-400 text-center underline" target="_blank" href="http://mivex.herokuapp.com">Micah Alumona</a> 
                             </span>
                         </div>
                     </div>

@@ -146,41 +146,41 @@ $(function() {
     // };
 
 
-    // FETCH NOTIFICATIONS
-    setInterval(() => {
-        url = '../getmail';
-        $.ajax({
-            url: url,
-            method: 'GET',
-            success: function(result) {
-                if (result) {
-                    $('#mt').html(result.notification)
-                    $('#mt').removeClass('hidden')
-                    $('#notebadge').removeClass('hidden')
-                    $('#mt').addClass('inline-flex')
-                    $('#notebadge').addClass('inline-block')
-                }
-            }
-        })
-    }, 2000);
+    //FETCH NOTIFICATIONS
+    // setInterval(() => {
+    //     url = '../getmail';
+    //     $.ajax({
+    //         url: url,
+    //         method: 'GET',
+    //         success: function(result) {
+    //             if (result) {
+    //                 $('#mt').html(result.notification)
+    //                 $('#mt').removeClass('hidden')
+    //                 $('#notebadge').removeClass('hidden')
+    //                 $('#mt').addClass('inline-flex')
+    //                 $('#notebadge').addClass('inline-block')
+    //             }
+    //         }
+    //     })
+    // }, 2000);
 
-    // FETCH LATEST APPLICATIONS
-    setInterval(() => {
-        url = '../getapplication';
-        $.ajax({
-            url: url,
-            method: 'GET',
-            success: function(result) {
-                if (result) {
-                    $('#newapp').html(result.notification)
-                    $('#newapp').removeClass('hidden')
-                    $('#notebadge').removeClass('hidden')
-                    $('#newapp').addClass('inline-flex')
-                    $('#notebadge').addClass('inline-block')
-                }
-            }
-        })
-    }, 2000);
+    //FETCH LATEST APPLICATIONS
+    // setInterval(() => {
+    //     url = '../getapplication';
+    //     $.ajax({
+    //         url: url,
+    //         method: 'GET',
+    //         success: function(result) {
+    //             if (result) {
+    //                 $('#newapp').html(result.notification)
+    //                 $('#newapp').removeClass('hidden')
+    //                 $('#notebadge').removeClass('hidden')
+    //                 $('#newapp').addClass('inline-flex')
+    //                 $('#notebadge').addClass('inline-block')
+    //             }
+    //         }
+    //     })
+    // }, 2000);
 
     $('#bdg').on('click', function() {
         $('#notebadge').hide()

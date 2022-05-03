@@ -23,19 +23,21 @@ class MailboxController extends Controller
        if ($validate->fails()) {
             return response()->json(['message' => $validate->errors()]);
        }
-
-        // INSERT DATA TO DB
-        $send = Mailbox::create([
-            'to' => $request->tomailer,
-            'subject' => $request->subject,
-            'from' => 'Lifeyieldersfoundation',
-            'body' => $request->message,
-        ]);
-
-        // SEND MESSAGE TO MAIL
-        if ($send->count() > 0) {
-            Mail::to($request->tomailer)->send(new MailMailbox($request));
-            return response()->json(['success' => 'Successfull! Mail sent'], 200);
-        }
+       else{
+           
+            // INSERT DATA TO DB
+            $send = Mailbox::create([
+                'to' => $request->tomailer,
+                'subject' => $request->subject,
+                'from' => 'Lifeyieldersfoundation',
+                'body' => $request->message,
+            ]);
+    
+            // SEND MESSAGE TO MAIL
+            if ($send->count() > 0) {
+                Mail::to($request->tomailer)->send(new MailMailbox($request));
+                return response()->json(['success' => 'Successfull! Mail sent'], 200);
+            }
+       }
     }
 }

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedBigInteger('role_id')->nullable();
+            
             $table->unsignedBigInteger('role_id')->constrained()->onDelete('cascade');
         });
     }

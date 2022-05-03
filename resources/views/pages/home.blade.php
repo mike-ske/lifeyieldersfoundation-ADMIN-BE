@@ -16,7 +16,7 @@
             </h2>
             <!-- CTA -->
             <a
-                class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple">
+                class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-green-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -24,7 +24,7 @@
                         </path>
                     </svg>
                   
-                    <span>Welcome  {{ Auth::user()->first_name }}  {{ Auth::user()->last_name }}   to the Life Yielders Foundation Admin.</span>
+                    <span>Welcome  {{ Auth::user()->first_name }}  {{ Auth::user()->last_name }} to the FAAN ICT Admin.</span>
                 </div>
             </a>
             <!-- Cards -->
@@ -40,10 +40,10 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Applications
+                            Students Applications
                         </p>
                         @php
-                            $application = DB::table('lyf_application')->orderBy('created_at')->get()
+                            $application = DB::table('students')->orderBy('created_at')->get()
                         @endphp
                         @if ($application)
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
@@ -68,24 +68,18 @@
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Grants
+                            Registered Devices
                         </p>
                         @php
-                            $gt = App\Models\Grant::where('grant_status', 1)->value('amount');
-                            // $grant = json_decode($grant, true);
-                            // $k = array_keys($grant);
-                            // dd($grant);
+                            $device = App\Models\Device::get()->count();
                         @endphp
-                        @if ($gt > 0)
-                            {{-- @foreach ($grant as $grants) --}}
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    {{ $gt > 10000 ? '$'.$gt.'+' :  '$'.$gt }}
-                                </p>
-                                
-                            {{-- @endforeach --}}
+                        @if ($device > 0)
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                {{ $device > 100 ? $device.'+' : $device }}
+                            </p>
                         @else
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{ '$'. 0 }}
+                                {{ 0 }}
                             </p>
                         @endif
                     </div>
@@ -93,23 +87,27 @@
                 <!-- Card -->
                 <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                     <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
+                       
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
                             </path>
                         </svg>
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Awards
+                            Fixed Devices
                         </p>
                         @php
-                            $award = App\Models\Award::where('award_status', 1)->get()
+                            $fixed = App\Models\Device::where('workdone', 'Fixed')
+                                                        ->where('workdone', 'fixed')
+                                                        ->where('workdone', 'FIXED')->get()->count();
+                
                         @endphp
-                        @if ($award)
+                        @if ($fixed > 0)
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{ $award->count() > 10000 ? $award->count() .'+' :  $award->count() }}
+                                {{ $fixed > 100 ? $fixed.'+' : $fixed }}
                             </p>
                         @else
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
@@ -124,20 +122,20 @@
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
                             </path>
                         </svg>
                     </div>
                     <div>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            Approved
+                            Pending Devices
                         </p>
                         @php
-                            $approve = DB::table('lyf_approval')->where('status_id', 2)->orderBy('id')->get()
+                          $pending = DB::table('devices')->where('workdone', 'Pending')->get()->count();
                         @endphp
-                        @if ($approve)
+                        @if ($pending > 0)
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{ $approve->count() > 2 ? $approve->count() .'+' :  $approve->count() }}
+                                {{ $pending > 100 ? $pending.'+' : $pending }}
                             </p>
                         @else
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
@@ -148,6 +146,22 @@
                 </div>
             </div>
 
+            {{-- TAB BUTTONS --}}
+            <div class="w-full flex justify-end items-end text-center">
+                <label class="flex dark:text-gray-400 mb-8">
+                    <div>
+                        <a href="{{ route('device') }}"
+                            class="px-3 mr-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Add Device
+                        </a>
+                        <a href="{{ route('student') }}"
+                            class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-600 border border-transparent rounded-md active:bg-yellow-600 hover:bg-orange-700 focus:outline-none focus:shadow-outline-purple">
+                            Add Student 
+                        </a>
+                    </div>
+                </label>
+            </div>
+          
             <!-- New Table -->
             <div class="w-full overflow-hidden rounded-lg shadow-xs mb-4">
                 <div class="w-full overflow-x-auto">
@@ -156,15 +170,15 @@
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Student</th>
+                                <th class="px-4 py-3">School</th>
+                                <th class="px-4 py-3">Programme</th>
                                 <th class="px-4 py-3">Email</th>
-                                <th class="px-4 py-3">Amount</th>
-                                <th class="px-4 py-3">Status</th>
                                 <th class="px-4 py-3">Date</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             @php
-                                $student = DB::table('lyf_application')->orderBy('id', 'DESC')->paginate(50)
+                                $student = App\Models\Student::orderBy('id', 'DESC')->paginate(20)
                             @endphp
                             @if ($student->count() > 0)
                                 @foreach ($student as $studentValue)
@@ -173,12 +187,12 @@
                                             <div class="flex items-center text-sm">
                                                 <!-- Avatar with inset shadow -->
                                                 @php
-                                                    $image = DB::table('lyf_account')->where('id', $studentValue->user_id)->value('image')
+                                                    $image = App\Models\Student::where('id', $studentValue->id)->value('image')
                                                 @endphp
                                                 @if ($image === '')
                                                     <div class="relative w-8 h-8 mr-3 rounded-full md:block">
                                                         <img class="object-cover w-full h-full rounded-full"
-                                                            src="https://ui-avatars.com/api/?name={{ $studentValue->fname }}+{{ $studentValue->lname }}" alt=""
+                                                            src="https://ui-avatars.com/api/?name={{ $studentValue->surname }}+{{ $studentValue->first_name }}" alt=""
                                                             loading="lazy">
                                                         <div class="absolute inset-0 rounded-full shadow-inner"
                                                             aria-hidden="true">
@@ -196,7 +210,8 @@
                                                 @endif
 
                                                 <div>
-                                                    <p class="font-semibold">{{ $studentValue->fname }} {{ $studentValue->lname }}</p>
+                                                    <p class="font-semibold">{{ Str::ucfirst($studentValue->surname) }}
+                                                        {{ Str::ucfirst($studentValue->first_name) }}</p>
                                                     <p class="text-xs text-gray-600 dark:text-gray-400">
                                                         Student
                                                     </p>
@@ -204,45 +219,15 @@
                                             </div>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $studentValue->email }}
+                                            {{ Str::upper($studentValue->school) }}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                        @php
-                                            $grant = App\Models\Grant::where('lyf_account_id', $studentValue->user_id)->orderBy('id')->value('amount')
-                                            
-                                        @endphp
-                                        @if ($grant > 0)
-                                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                                {{  $grant > 10000 ? '$'.$grant.'+' :  '$'.$grant  }}
+                                            <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                                {{ Str::upper($studentValue->programme) }}
                                             </p>
-                                        @else
-                                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                                {{ '$'. 0 }}
-                                            </p>
-                                        @endif
                                         </td>
                                         <td class="px-4 py-3 text-xs">
-                                            @php
-                                                $aprove_id  = DB::table('lyf_approval')->where('user_id', $studentValue->user_id)->value('status_id')
-                                            @endphp
-                                            @if ($aprove_id == 2)
-                                                <span
-                                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                                    Approved
-                                                </span>
-                                            @endif
-                                            @if ($aprove_id == 0)
-                                                <span
-                                                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                                    Awating
-                                                </span>
-                                            @endif
-                                            @if ($aprove_id == 1)
-                                                <span
-                                                    class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
-                                                    Pending
-                                                </span>
-                                            @endif
+                                            {{ $studentValue->email_address }}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
                                             {{ Carbon\Carbon::parse($studentValue->created_at)->diffForHumans() }}

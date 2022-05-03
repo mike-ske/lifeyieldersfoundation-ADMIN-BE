@@ -61,6 +61,8 @@
                             <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Student</th>
+                                <th class="px-4 py-3">School</th>
+                                <th class="px-4 py-3">Programme</th>
                                 <th class="px-4 py-3">Email</th>
                                 <th class="px-4 py-3">Date</th>
                                 <th class="px-4 py-3">Actions</th>
@@ -73,10 +75,10 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center text-sm">
                                                 <!-- Avatar with inset shadow -->
-                                                @if ($studentValue->image === '')
+                                                @if ($studentValue->image === '' || $studentValue->image == null)
                                                     <div class="relative w-8 h-8 mr-3 rounded-full md:block">
                                                         <img class="object-cover w-full h-full rounded-full"
-                                                            src="https://ui-avatars.com/api/?name={{ $studentValue->fname }}+{{ $studentValue->lname }}"
+                                                            src="https://ui-avatars.com/api/?name={{ $studentValue->surname }}+{{ $studentValue->first_name }}"
                                                             alt="" loading="lazy">
                                                         <div class="absolute inset-0 rounded-full shadow-inner"
                                                             aria-hidden="true">
@@ -93,8 +95,8 @@
                                                     </div>
                                                 @endif
                                                 <div>
-                                                    <p class="font-semibold">{{ $studentValue->fname }}
-                                                        {{ $studentValue->lname }}</p>
+                                                    <p class="font-semibold">{{ Str::ucfirst($studentValue->surname) }}
+                                                        {{ Str::ucfirst($studentValue->first_name) }}</p>
                                                     <p class="text-xs text-gray-600 dark:text-gray-400">
                                                         Student
                                                     </p>
@@ -102,14 +104,20 @@
                                             </div>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $studentValue->email }}
+                                            {{ Str::upper($studentValue->school) }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $studentValue->programme }}
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">
+                                            {{ $studentValue->email_address }}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
                                             {{ Carbon\Carbon::parse($studentValue->created_at)->diffForHumans() }}
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
-                                                <a href="student/{{ $studentValue->id }}"
+                                                <a href="students/{{ $studentValue->id }}"
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Edit">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -185,7 +193,7 @@
                 </div>
 
                 <div class="p-6 pt-0 text-center">
-                    <form action="student/delete" method="post" enctype="multipart/form-data">
+                    <form action="students/delete" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
 
